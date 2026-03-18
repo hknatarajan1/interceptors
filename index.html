@@ -1,0 +1,1529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gulf & Israel — Interceptor Capacity — Mar 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ake1:#00549f; --ake2:#083863; --ake3:#0c1e38;
+  --red:#ef4444;   --red-bg:rgba(239,68,68,0.08);    --red-border:rgba(239,68,68,0.22);
+  --amber:#f59e0b; --amber-bg:rgba(245,158,11,0.08); --amber-border:rgba(245,158,11,0.24);
+  --green:#22c55e; --green-bg:rgba(34,197,94,0.08);  --green-border:rgba(34,197,94,0.24);
+  --blue:#3b82f6;  --blue-bg:rgba(59,130,246,0.07);  --blue-border:rgba(59,130,246,0.22);
+  --purple:#7c3aed;
+  --bg:#e8eef4;
+  --panel:rgba(255,255,255,0.97);
+  --border:rgba(8,56,99,0.14);
+  --border2:rgba(8,56,99,0.22);
+  --text:#1a2a3a; --muted:#6b8ba8; --muted2:#4a6a88;
+  --font:'Inter',sans-serif; --mono:'JetBrains Mono',monospace;
+  --shadow:0 1px 6px rgba(8,56,99,0.09);
+  --shadow-lg:0 6px 28px rgba(8,56,99,0.14);
+  --hdr:46px; --nav:36px;
+}
+body.dark {
+  --bg:#061c30; --panel:rgba(6,30,54,0.97);
+  --border:rgba(255,255,255,0.09); --border2:rgba(255,255,255,0.16);
+  --text:#dde8f2; --muted:#4d6e8e; --muted2:#7a9ab8;
+  --red-bg:rgba(239,68,68,0.12); --amber-bg:rgba(245,158,11,0.1); --green-bg:rgba(34,197,94,0.09);
+  --shadow:0 2px 14px rgba(0,0,0,0.4); --shadow-lg:0 8px 40px rgba(0,0,0,0.6);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html,body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:13px;line-height:1.5;}
+
+/* ── HEADER ── */
+#hdr{
+  position:sticky;top:0;z-index:400;height:var(--hdr);
+  background:var(--ake2);border-bottom:2px solid var(--ake1);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 14px;box-shadow:0 2px 16px rgba(0,0,0,0.35);
+}
+.h-left{display:flex;align-items:center;gap:10px;}
+.h-title{font-size:13px;font-weight:700;letter-spacing:-.01em;color:#fff;white-space:nowrap;}
+.h-sub{font-size:9px;color:rgba(255,255,255,0.5);margin-top:1px;white-space:nowrap;font-family:var(--mono);}
+.live-pill{display:flex;align-items:center;gap:5px;background:rgba(239,68,68,.18);border:1px solid rgba(239,68,68,.35);border-radius:20px;padding:3px 9px;font-size:8px;font-weight:700;letter-spacing:.12em;color:#f87171;text-transform:uppercase;}
+.ldot{width:5px;height:5px;background:#f87171;border-radius:50%;animation:blink 1.2s step-end infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+.h-right{display:flex;align-items:center;gap:6px;}
+.stat-chip{display:flex;flex-direction:column;align-items:center;background:rgba(0,84,159,.35);border:1px solid rgba(255,255,255,.12);border-radius:6px;padding:3px 10px;min-width:68px;}
+.sc-val{font-size:14px;font-weight:700;line-height:1;font-family:var(--mono);color:#fff;}
+.sc-val.r{color:#fca5a5;} .sc-val.a{color:#fcd34d;} .sc-val.g{color:#86efac;}
+.sc-lbl{font-size:7px;color:rgba(255,255,255,.45);margin-top:2px;letter-spacing:.08em;text-transform:uppercase;}
+.hbtn{padding:4px 10px;font-size:9px;font-weight:600;cursor:pointer;color:rgba(255,255,255,.55);background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);border-radius:6px;font-family:var(--font);transition:all .12s;}
+.hbtn:hover{background:rgba(255,255,255,.13);color:#fff;}
+#hclock{font-family:var(--mono);font-size:9px;color:rgba(255,255,255,.38);min-width:58px;text-align:right;}
+
+/* ── NAV BAR ── */
+#nav{
+  position:sticky;top:var(--hdr);z-index:300;height:var(--nav);
+  background:var(--ake2);border-bottom:1px solid rgba(0,0,0,.2);
+  display:flex;align-items:center;padding:0 14px;gap:2px;
+}
+.ntab{
+  height:var(--nav);display:flex;align-items:center;padding:0 14px;
+  font-size:11px;font-weight:600;color:rgba(255,255,255,.45);
+  background:none;border:none;border-bottom:2px solid transparent;
+  cursor:pointer;font-family:var(--font);transition:all .13s;
+  letter-spacing:.01em;margin-bottom:-1px;
+}
+.ntab:hover{color:rgba(255,255,255,.8);}
+.ntab.active{color:#fff;border-bottom-color:var(--ake1);}
+
+/* ── VIEWS ── */
+.view{display:none;}
+.view.active{display:block;}
+
+/* ══════════════════════════════════════
+   OVERVIEW
+══════════════════════════════════════ */
+#ov{max-width:1120px;margin:0 auto;padding:18px 16px 60px;}
+.ov-hdr{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:14px;}
+.ov-title{font-size:15px;font-weight:700;}
+.ov-note{font-size:10px;color:var(--muted);font-family:var(--mono);}
+
+.c-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(296px,1fr));gap:12px;}
+
+/* Country card */
+.c-card{
+  background:var(--panel);border:1px solid var(--border);
+  border-radius:12px;box-shadow:var(--shadow);
+  cursor:pointer;transition:box-shadow .18s,border-color .18s,transform .15s;overflow:hidden;
+}
+.c-card:hover{box-shadow:var(--shadow-lg);border-color:var(--ake1);transform:translateY(-2px);}
+
+.c-top{
+  padding:12px 14px 10px;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.c-name-wrap{display:flex;align-items:center;gap:8px;}
+.c-flag{font-size:20px;}
+.c-name{font-size:14px;font-weight:700;}
+.c-sub2{font-size:9px;color:var(--muted);margin-top:1px;}
+.sbadge{font-size:8px;font-weight:700;letter-spacing:.06em;padding:3px 8px;border-radius:4px;font-family:var(--mono);}
+.sb-critical{background:var(--red-bg);color:var(--red);border:1px solid var(--red-border);}
+.sb-strained{background:var(--amber-bg);color:var(--amber);border:1px solid var(--amber-border);}
+.sb-adequate{background:var(--green-bg);color:var(--green);border:1px solid var(--green-border);}
+
+.c-body{padding:11px 14px 12px;}
+
+/* Inbound chips */
+.ib-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:11px;}
+.ib-chip{background:rgba(8,56,99,0.03);border:1px solid var(--border);border-radius:7px;padding:7px 8px;text-align:center;}
+body.dark .ib-chip{background:rgba(0,84,159,0.06);}
+.ib-num{font-size:18px;font-weight:700;line-height:1;font-family:var(--mono);}
+.ib-num.bm{color:var(--red);}
+.ib-num.cm{color:var(--purple);}
+.ib-num.dr{color:var(--amber);}
+.ib-lbl{font-size:8px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-top:3px;}
+.ib-conf{font-size:8px;font-family:var(--mono);margin-top:2px;}
+.ic-h{color:var(--green);} .ic-m{color:var(--amber);} .ic-l{color:var(--red);}
+
+/* Cap bars */
+.cap-rows{display:flex;flex-direction:column;gap:5px;}
+.cap-row{display:flex;align-items:center;gap:7px;}
+.cap-lbl{font-size:9px;color:var(--muted);width:90px;flex-shrink:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:var(--mono);}
+.cap-track{flex:1;height:5px;background:var(--border);border-radius:3px;overflow:hidden;}
+.cap-fill{height:100%;border-radius:3px;transition:width .5s;}
+.cap-pct{font-size:9px;font-family:var(--mono);font-weight:600;min-width:28px;text-align:right;}
+
+.c-foot{
+  padding:7px 14px;border-top:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.c-conf{display:flex;align-items:center;gap:4px;font-size:9px;color:var(--muted);font-family:var(--mono);}
+.cdot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
+.c-cta{font-size:9px;color:var(--ake1);font-weight:600;font-family:var(--mono);}
+body.dark .c-cta{color:#60a5fa;}
+
+/* ══════════════════════════════════════
+   DETAIL
+══════════════════════════════════════ */
+#det{max-width:940px;margin:0 auto;padding:16px 16px 60px;}
+.back{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;color:var(--muted2);cursor:pointer;margin-bottom:14px;background:none;border:none;font-family:var(--font);padding:0;}
+.back:hover{color:var(--text);}
+.det-hdr{display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap;}
+.det-flag{font-size:26px;}
+.det-name{font-size:20px;font-weight:700;}
+.det-sub{font-size:10px;color:var(--muted);margin-top:2px;max-width:520px;}
+
+/* Accordion sections */
+.acc{background:var(--panel);border:1px solid var(--border);border-radius:12px;margin-bottom:10px;overflow:hidden;box-shadow:var(--shadow);}
+.acc-hdr{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 16px;cursor:pointer;user-select:none;transition:background .12s;
+}
+.acc-hdr:hover{background:rgba(8,56,99,0.03);}
+body.dark .acc-hdr:hover{background:rgba(0,84,159,0.07);}
+.acc-left{display:flex;align-items:center;gap:10px;}
+.acc-num{font-size:9px;font-weight:700;font-family:var(--mono);letter-spacing:.08em;padding:2px 7px;border-radius:4px;background:rgba(8,56,99,0.06);color:var(--muted2);border:1px solid var(--border);}
+body.dark .acc-num{background:rgba(0,84,159,0.1);}
+.acc-title{font-size:12px;font-weight:700;}
+.acc-summary{font-size:10px;color:var(--muted2);font-family:var(--mono);}
+.acc-arrow{font-size:11px;color:var(--muted);transition:transform .2s;}
+.acc-arrow.open{transform:rotate(180deg);}
+.acc-body{border-top:1px solid var(--border);padding:16px;display:none;}
+.acc-body.open{display:block;}
+
+/* ── SECTION 1: INBOUND ── */
+.ib-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:12px;}
+.ib-block{background:rgba(8,56,99,0.03);border:1px solid var(--border);border-radius:8px;padding:10px 12px;}
+body.dark .ib-block{background:rgba(0,84,159,0.06);}
+.ib-blk-title{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
+.ibt-bm{color:var(--red);} .ibt-cm{color:var(--purple);} .ibt-dr{color:var(--amber);}
+.ib-row-d{display:flex;justify-content:space-between;align-items:baseline;padding:3px 0;border-bottom:1px solid var(--border);font-size:10px;}
+.ib-row-d:last-child{border-bottom:none;}
+.ib-row-k{color:var(--muted);}
+.ib-row-v{font-family:var(--mono);font-weight:600;}
+.ctag{display:inline-flex;align-items:center;gap:3px;font-size:8px;font-family:var(--mono);padding:2px 6px;border-radius:3px;margin-top:6px;}
+.ctag-h{background:var(--green-bg);color:var(--green);border:1px solid var(--green-border);}
+.ctag-m{background:var(--amber-bg);color:var(--amber);border:1px solid var(--amber-border);}
+.ctag-l{background:var(--red-bg);color:var(--red);border:1px solid var(--red-border);}
+.src-note{font-size:10px;color:var(--muted2);line-height:1.6;padding:8px 10px;background:rgba(8,56,99,0.03);border-radius:6px;border-left:2px solid var(--border2);margin-top:10px;}
+body.dark .src-note{background:rgba(0,84,159,0.07);}
+
+/* ── SECTION 2: CAPACITY TABLE ── */
+.cap-tbl{width:100%;border-collapse:collapse;margin-bottom:14px;}
+.cap-tbl th{font-size:8.5px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);padding:5px 8px;border-bottom:1px solid var(--border);text-align:left;}
+.cap-tbl th:not(:first-child){text-align:right;}
+.cap-tbl td{padding:7px 8px;border-bottom:1px solid var(--border);font-size:11px;vertical-align:middle;}
+.cap-tbl tr:last-child td{border-bottom:none;}
+.cap-tbl td:not(:first-child){text-align:right;font-family:var(--mono);}
+.cap-tbl tr:hover td{background:rgba(8,56,99,0.02);}
+body.dark .cap-tbl tr:hover td{background:rgba(0,84,159,0.05);}
+.sys-nm{font-weight:600;font-size:12px;}
+.sys-rl{font-size:9px;color:var(--muted);margin-top:1px;}
+.bar-cell{display:flex;align-items:center;gap:6px;justify-content:flex-end;}
+.bar-s{width:56px;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+.bar-f{height:100%;border-radius:2px;}
+.ext-lbl{font-size:9px;color:var(--muted);font-style:italic;}
+.conf-s{font-size:8.5px;font-family:var(--mono);}
+.cs-h{color:var(--green);} .cs-m{color:var(--amber);} .cs-l{color:var(--red);}
+.consump-block{background:rgba(8,56,99,0.03);border:1px solid var(--border);border-radius:8px;padding:10px 12px;margin-top:2px;}
+body.dark .consump-block{background:rgba(0,84,159,0.06);}
+.cb-title{font-size:8.5px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:8px;}
+.cb-row{display:flex;justify-content:space-between;align-items:baseline;padding:3px 0;border-bottom:1px solid var(--border);font-size:10px;gap:12px;}
+.cb-row:last-child{border-bottom:none;}
+.cb-k{color:var(--muted2);flex-shrink:0;max-width:180px;}
+.cb-v{font-family:var(--mono);font-size:9.5px;color:var(--text);text-align:right;line-height:1.5;}
+
+/* ── SECTION 3: CALC ── */
+.eng-tbl{width:100%;border-collapse:collapse;margin-bottom:14px;}
+.eng-tbl th{font-size:8.5px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);padding:5px 8px;border-bottom:1px solid var(--border);text-align:left;}
+.eng-tbl td{padding:6px 8px;border-bottom:1px solid var(--border);font-size:10px;vertical-align:top;}
+.eng-tbl tr:last-child td{border-bottom:none;}
+.eng-threat{font-weight:600;color:var(--text);}
+.eng-sys{color:var(--muted2);}
+.eng-note{color:var(--muted);font-size:9px;font-style:italic;}
+.assum-row{display:flex;justify-content:space-between;align-items:baseline;padding:4px 0;border-bottom:1px solid var(--border);font-size:10px;gap:12px;}
+.assum-row:last-child{border-bottom:none;}
+.assum-k{color:var(--muted2);flex-shrink:0;max-width:200px;font-weight:500;}
+.assum-v{color:var(--text);text-align:right;font-size:9.5px;line-height:1.55;max-width:440px;}
+.unk-row{padding:3px 0;border-bottom:1px solid var(--border);font-size:10px;color:var(--muted);display:flex;align-items:baseline;gap:6px;}
+.unk-row:last-child{border-bottom:none;}
+.warn-strip{background:var(--amber-bg);border:1px solid var(--amber-border);border-radius:7px;padding:8px 11px;font-size:10px;color:var(--amber);line-height:1.6;margin-top:10px;}
+.sec-blk-title{font-size:8.5px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--muted2);margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid var(--border);}
+
+/* ══════════════════════════════════════
+   SYSTEMS GUIDE
+══════════════════════════════════════ */
+#sys{max-width:1120px;margin:0 auto;padding:18px 16px 60px;}
+.sys-hdr{margin-bottom:16px;}
+.sys-title{font-size:15px;font-weight:700;margin-bottom:3px;}
+.sys-note2{font-size:10px;color:var(--muted);}
+.sys-section{margin-bottom:24px;}
+.sys-sec-title{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted2);margin-bottom:10px;padding-bottom:6px;border-bottom:2px solid var(--border);}
+.sys-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:10px;}
+.sc{background:var(--panel);border:1px solid var(--border);border-radius:11px;box-shadow:var(--shadow);overflow:hidden;}
+.sc-top{padding:11px 13px 10px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;justify-content:space-between;gap:8px;}
+.sc-name{font-size:12px;font-weight:700;margin-bottom:2px;}
+.sc-aka{font-size:9px;color:var(--muted);}
+.tcs{display:flex;flex-wrap:wrap;gap:3px;margin-top:5px;}
+.tc{font-size:8px;font-weight:700;padding:2px 5px;border-radius:3px;font-family:var(--mono);letter-spacing:.03em;}
+.tc-bm{background:var(--red-bg);color:var(--red);border:1px solid var(--red-border);}
+.tc-cm{background:rgba(124,58,237,0.08);color:var(--purple);border:1px solid rgba(124,58,237,0.2);}
+.tc-drone{background:var(--amber-bg);color:var(--amber);border:1px solid var(--amber-border);}
+.tc-uav{background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-border);}
+.tc-acft{background:var(--green-bg);color:var(--green);border:1px solid var(--green-border);}
+.sc-stat-col{text-align:right;flex-shrink:0;}
+.sc-status{font-size:8px;font-family:var(--mono);font-weight:700;margin-bottom:3px;}
+.scs-crit{color:var(--red);} .scs-str{color:var(--amber);} .scs-ok{color:var(--green);}
+.sc-cost{font-size:9px;color:var(--muted);font-family:var(--mono);}
+.sc-body{padding:9px 13px 11px;}
+.sc-stats{display:flex;border-bottom:1px solid var(--border);margin-bottom:8px;}
+.sc-stat{flex:1;padding:5px 6px;text-align:center;border-right:1px solid var(--border);}
+.sc-stat:last-child{border-right:none;}
+.sc-stat-v{font-size:10px;font-weight:600;font-family:var(--mono);color:var(--text);}
+.sc-stat-l{font-size:8px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-top:1px;}
+.sc-desc{font-size:10px;color:var(--muted2);line-height:1.65;margin-bottom:8px;}
+.ops-row{display:flex;flex-wrap:wrap;gap:4px;}
+.op-tag{display:inline-flex;align-items:center;gap:3px;font-size:9px;padding:2px 7px;border-radius:4px;border:1px solid var(--border);background:rgba(8,56,99,0.03);}
+body.dark .op-tag{background:rgba(0,84,159,0.07);}
+.op-f{font-size:11px;}
+.op-n{color:var(--muted2);}
+.op-s{font-size:8px;font-family:var(--mono);font-weight:700;margin-left:2px;}
+.op-sc{color:var(--red);} .op-ss{color:var(--amber);}
+.sc-note-toggle{font-size:9px;color:var(--ake1);cursor:pointer;margin-top:6px;display:inline-block;}
+body.dark .sc-note-toggle{color:#60a5fa;}
+.sc-note{font-size:9px;color:var(--muted2);line-height:1.6;margin-top:5px;padding:6px 9px;background:rgba(8,56,99,0.03);border-radius:5px;display:none;border-left:2px solid var(--border2);}
+body.dark .sc-note{background:rgba(0,84,159,0.07);}
+.sc-note.open{display:block;}
+
+/* ── SYSTEM CARD IMAGE ── */
+.sc-img{width:100%;height:130px;object-fit:cover;object-position:center;display:block;border-bottom:1px solid var(--border);background:rgba(8,56,99,0.05);}
+.sc-img-wrap{position:relative;overflow:hidden;}
+.sc-img-wrap::after{content:'';position:absolute;bottom:0;left:0;right:0;height:40px;background:linear-gradient(to bottom,transparent,var(--panel));pointer-events:none;}
+body.dark .sc-img-wrap::after{background:linear-gradient(to bottom,transparent,rgba(6,30,54,0.97));}
+.sc-no-img{width:100%;height:70px;display:flex;align-items:center;justify-content:center;background:rgba(8,56,99,0.04);border-bottom:1px solid var(--border);}
+body.dark .sc-no-img{background:rgba(0,84,159,0.07);}
+.sc-no-img-icon{font-size:28px;opacity:0.3;}
+
+/* ── SYSTEMS FILTER BAR ── */
+#sys-filter{
+  display:flex;align-items:center;gap:6px;
+  padding:10px 0 14px;flex-wrap:wrap;
+}
+.sf-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);margin-right:4px;white-space:nowrap;}
+.sf-btn{
+  display:flex;align-items:center;gap:5px;
+  padding:5px 11px;border-radius:6px;cursor:pointer;
+  border:1px solid var(--border);background:var(--panel);
+  font-size:10px;font-weight:600;color:var(--muted2);
+  font-family:var(--font);transition:all .13s;
+}
+.sf-btn:hover{border-color:var(--ake1);color:var(--text);}
+.sf-btn.active{background:rgba(0,84,159,0.12);border-color:rgba(0,84,159,0.4);color:var(--ake1);}
+body.dark .sf-btn.active{background:rgba(0,84,159,0.22);color:#60a5fa;}
+.sf-flag{font-size:14px;line-height:1;}
+.sf-name{white-space:nowrap;}
+.sys-card-hidden{display:none!important;}
+.sys-section-empty{display:none!important;}
+
+/* ── DUAL STATUS BADGES ── */
+.badge-pair{display:flex;gap:4px;align-items:center;}
+.sbadge-sm{font-size:7px;font-weight:700;letter-spacing:.05em;padding:2px 6px;border-radius:3px;font-family:var(--mono);display:flex;align-items:center;gap:3px;}
+.sbadge-sm .badge-icon{font-size:8px;}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div id="hdr">
+  <div class="h-left">
+    <img src="data:image/png;base64,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SA3YNJ222twko/HoXSHbba3CSj8ehdIDdg0nbba3CSj8ehdIdttrcJKPx6F0gN2DSdttrcJKPx6F0h222twko/HoXSA3YNJ222twko/HoXSHbba3CSj8ehdIDdg0nbba3CSj8ehdIdttrcJKPx6F0gN2DSdttrcJKPx6F0h222twko/HoXSA3YNJ222twko/HoXSHbba3CSj8ehdIDdg0nbba3CSj8ehdIdttrcJKPx6F0gN2DSdttrcJKPx6F0h222twko/HoXSA3YNJ222twko/HoXSHbba3CSj8ehdIDdg0nbba3CSj8ehdIdttrcJKPx6F0gN2DSdttrcJKPx6F0h222twko/HoXSA3YNJ222twko/HoXSHbba3CSj8ehdIDdg0nbba3CSj8ehdIdttrcJKPx6F0gN2DSdttrcJKPx6F0h222twko/HoXSA8DpgLlo23j82g+vhFYJZVpZ3Jb07o8XdKyldpceO+WhbCHDm4bnO/p4e4iLmpWqoAAAAAAAAAAAAAAAAAAAAAAPqkJuZkZuFNyczGlpiC9Hw40F6siMVN9rk1ovnQ+UyoEr8DtLusUV0Gj4kwo1ZkNTW1OA1vtmF++3UkRPPqd+8pMyz7pt68aHBrVs1eVqkhFTvYsu/PL9lybrXeNrkRU30Kgz1OH1+3XYNaSrWnWZmmx9SRGsdnDjNT82Ixe9emtdSpq3UyXWBbcCM+BulhbN1JAo99Ml7brDsmNmkcvtGO795dcJfM5Vb+1ryO+9ttrcJKNx+F0gN2DTdttrcJaNx6F0h222twlo3HoXSA3INN222twlo3HoXSHbba3CWjcehdIDcg03bba3CWjcehdIdttrcJaNx6F0gNyDTdttrcJaNx6F0h222twlo3HoXSA3INN222twlo3HoXSHbba3CWjcehdIDcg03bba3CWjcehdIdttrcJaNx6F0gNyDTdttrcJaNx6F0h222twlo3HoXSA3INRBum2o0ZsKDcFJiPduNZOQ1VfoU+v3XpX6zkvt284H2A+L3WpX60kvt28491qV+tJL7dvOB9oPi91qV+tJL7dvOPdalfrSS+3bzgfaD4vdalfrSS+3bzj3WpX60kvt284H2g+L3WpX60kvt28491qV+tJL7dvOB9oPi91qV+tJL7dvOPdalfrSS+3bzgfaD4vdalfrSS+3bzj3WpX60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" style="height:26px;width:auto;mix-blend-mode:screen;opacity:0.9;flex-shrink:0;" alt="AKE International">
+    <div style="width:1px;height:22px;background:rgba(255,255,255,0.18);flex-shrink:0;"></div>
+    <div>
+      <div class="h-title">Interceptor Capacity — Gulf Region &amp; Israel</div>
+      <div class="h-sub">Analyst estimates · AKE International · Day 19 · 18 Mar 2026</div>
+    </div>
+    <div class="live-pill"><div class="ldot"></div>Active Conflict</div>
+  </div>
+  <div class="h-right">
+    <div class="stat-chip"><div class="sc-val r">4</div><div class="sc-lbl">BM Critical</div></div>
+    <div class="stat-chip"><div class="sc-val a">3</div><div class="sc-lbl">BM Strained</div></div>
+    <div class="stat-chip"><div class="sc-val">~7,400</div><div class="sc-lbl">Regional inbound</div></div>
+    <div class="stat-chip"><div class="sc-val a">~76%</div><div class="sc-lbl">Drone share</div></div>
+    <button class="hbtn" onclick="toggleDark()">☾</button>
+    <div id="hclock"></div>
+  </div>
+</div>
+
+<!-- NAV -->
+<div id="nav">
+  <button class="ntab active" id="tab-ov" onclick="showView('ov')">Countries</button>
+  <button class="ntab" id="tab-sys" onclick="showView('sys')">Systems guide</button>
+</div>
+
+<!-- OVERVIEW VIEW -->
+<div id="view-ov" class="view active">
+  <div id="ov">
+    <div class="ov-hdr">
+      <div class="ov-title">Interceptor capacity by country</div>
+      <div class="ov-note">Bars = % of pre-crisis est. remaining · Click for detail</div>
+    </div>
+    <div class="c-grid" id="c-grid"></div>
+  </div>
+</div>
+
+<!-- DETAIL VIEW -->
+<div id="view-det" class="view">
+  <div id="det">
+    <button class="back" onclick="showView('ov')">← All countries</button>
+    <div class="det-hdr">
+      <span class="det-flag" id="d-flag"></span>
+      <div>
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+          <span class="det-name" id="d-name"></span>
+          <div class="badge-pair">
+            <span class="sbadge-sm" id="d-badge-bm"></span>
+            <span class="sbadge-sm" id="d-badge-drone"></span>
+          </div>
+        </div>
+        <div class="det-sub" id="d-sub"></div>
+      </div>
+    </div>
+    <div id="d-secs"></div>
+  </div>
+</div>
+
+<!-- SYSTEMS VIEW -->
+<div id="view-sys" class="view">
+  <div id="sys">
+    <div class="sys-hdr">
+      <div class="sys-title">Systems reference guide</div>
+      <div class="sys-note2">What each system engages · Who operates it in the region · Current status</div>
+    </div>
+    <div id="sys-filter">
+  <span class="sf-label">Filter by country:</span>
+  <button class="sf-btn active" data-country="all" onclick="filterSys(this)"><span class="sf-name">All</span></button>
+  <button class="sf-btn" data-country="🇦🇪" onclick="filterSys(this)"><span class="sf-flag">🇦🇪</span><span class="sf-name">UAE</span></button>
+  <button class="sf-btn" data-country="🇮🇱" onclick="filterSys(this)"><span class="sf-flag">🇮🇱</span><span class="sf-name">Israel</span></button>
+  <button class="sf-btn" data-country="🇸🇦" onclick="filterSys(this)"><span class="sf-flag">🇸🇦</span><span class="sf-name">Saudi Arabia</span></button>
+  <button class="sf-btn" data-country="🇶🇦" onclick="filterSys(this)"><span class="sf-flag">🇶🇦</span><span class="sf-name">Qatar</span></button>
+  <button class="sf-btn" data-country="🇰🇼" onclick="filterSys(this)"><span class="sf-flag">🇰🇼</span><span class="sf-name">Kuwait</span></button>
+  <button class="sf-btn" data-country="🇧🇭" onclick="filterSys(this)"><span class="sf-flag">🇧🇭</span><span class="sf-name">Bahrain</span></button>
+  <button class="sf-btn" data-country="🇺🇸" onclick="filterSys(this)"><span class="sf-flag">🇺🇸</span><span class="sf-name">US</span></button>
+</div>
+<div id="sys-content"></div>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════════════
+// DATA MODEL
+// ══════════════════════════════════════════════════════
+
+const DATA = {
+  uae:{
+    name:'UAE',flag:'🇦🇪',status:'critical',bm_status:'critical',drone_status:'strained',
+    sub:'Al Dhafra · Al Minhad · Highest confirmed inbound volume · F-16E + Mirage primary drone layer · THAAD + PAC-3 for BMs',
+    inbound:{
+      bm:{confirmed:314,est:null,source:'UAE MoD daily cumulative @modgovae — Mar 17',conf:'high',
+        rows:[['Detected','314'],['Intercepted / destroyed','~296'],['Fell to sea','~16'],['Hit UAE territory','~2'],['Type','Al Qiam SRBM + Shahab variants']],
+        note:'Daily cumulative statements published Feb 28 – Mar 17. Highest confidence of any country. Does not split by intercepting system.'},
+      cm:{confirmed:15,est:null,source:'UAE MoD Mar 17',conf:'high',
+        rows:[['Detected','15'],['Intercepted','15 (all)'],['Type','Paveh (Bafeh) cruise missile confirmed']],
+        note:'All 15 reported destroyed. Count static since Day 4 — possible MoD stopped disaggregating.'},
+      drone:{confirmed:1672,est:null,source:'UAE MoD Mar 17',conf:'high',
+        rows:[['Detected','1,672'],['Intercepted','~1,571 (~94%)'],['Hit UAE territory','~101 (~6%)'],['Types','Shahed-136, Shahed-107, Shahed-238']],
+        note:'UAE govt explicitly rebutted Bloomberg analysis stating drones intercepted mainly by F-16/Mirage using air-to-air missiles — NOT PAC-3. Critical for capacity model.'},
+    },
+    systems:[
+      {nm:'THAAD',rl:'Tier 1 · BMs only',pre:96,rem:7,lo:3,hi:12,pct:8,conf:'low',note:'Near-exhausted. ⚠ Al Ruwais THAAD radar struck and likely destroyed by Mar 1 (CNN satellite imagery) — degraded engagement capacity from Day 1. This pushed more BM load to PAC-3 from very early in conflict. No new US deliveries until Apr 2027.'},
+      {nm:'PAC-3 MSE',rl:'Tier 2 · BM + CM',pre:700,rem:86,lo:40,hi:160,pct:12,conf:'low',note:'Revised: ~2.0 shots/BM (Middle East Eye cites 2–3 as standard doctrine; UAE THAAD radar hit Mar 1 pushing more load to PAC-3). 296 BMs × 2.0 = 592 + 15 CMs × 1.5 = 22 ≈ 614 consumed. US stonewalling resupply requests (MEE). Near-critical.'},
+      {nm:'PAC-2 GEM-T',rl:'Tier 2 · CM + backup BM',pre:120,rem:80,lo:50,hi:110,pct:67,conf:'very low',note:'2 legacy batteries. CM and backup BM shots.'},
+      {nm:'Cheongung II',rl:'Tier 2 · drone + CM',pre:250,rem:190,lo:140,hi:220,pct:76,conf:'low',note:'Korean supply chain — independent of US/Lockheed. First confirmed combat use.'},
+      {nm:'Barak-8',rl:'Tier 2 · drone + CM',pre:120,rem:65,lo:40,hi:90,pct:54,conf:'low',note:'Israeli-designed. Some supply chain risk.'},
+      {nm:'Pantsir-S1',rl:'Tier 3 · close-in drones',pre:200,rem:110,lo:70,hi:140,pct:55,conf:'very low',note:'Russian CADS. Confirmed UAE service and confirmed active in this conflict.'},
+      {nm:'F-16E / Mirage 2000-9',rl:'Airborne · AIM-9/AIM-120/MICA',pre:2500,rem:1350,lo:900,hi:1800,pct:54,conf:'very low',note:'UAE govt confirmed primary drone layer. ~1 AAM per drone intercept. ~130 fighters × ~15–20 AAMs avg pre-crisis. US stonewalling Gulf resupply requests (MEE) means no confirmed top-up. At current tempo another 18 days would exhaust remaining stock.',ext:false},
+    ],
+    calc:{
+      eng:[
+        {threat:'Ballistic missile',primary:'THAAD (upper, degraded from Mar 1) → PAC-3 MSE (terminal)',secondary:'PAC-2 (backup shots)',note:'Revised to ~2.0 rds/BM (MEE: 2–3 is standard doctrine). THAAD radar hit Mar 1 forced PAC-3 to absorb more of the upper-tier load early in conflict.'},
+        {threat:'Cruise missile',primary:'PAC-3 MSE / PAC-2',secondary:'F-16/Mirage (AIM-120)',note:'~1.2 rds/CM'},
+        {threat:'Shahed drone',primary:'F-16E / Mirage 2000-9 (AIM-9/MICA)',secondary:'Cheongung / Barak-8',note:'UAE MoD confirmed fighters are primary drone layer'},
+      ],
+      assume:[
+        {k:'Fighter-first drone doctrine',v:'UAE MoD Mar 3 briefing explicitly stated F-16/Mirage intercept drones, not PAC-3. Assumed ~60% of drones engaged by aircraft.'},
+        {k:'PAC-3 BM multiplier — REVISED',v:'Revised from 1.4 to 2.0 shots/BM. Middle East Eye cites "2–3 interceptors" as the standard rule for incoming BMs. THAAD radar at Al Ruwais struck by Mar 1 (CNN satellite imagery) degraded upper-tier coverage, pushing more load to PAC-3 terminal layer from early in the conflict. At 2.0: 296 BMs × 2.0 + 15 CMs × 1.5 ≈ 614 PAC-3 rounds consumed → ~86 remaining (12%). CRITICAL not STRAINED.'},
+        {k:'Pre-crisis PAC-3 stock',v:'Derived from DSCA notifications + CSIS P-21 exhibit. No official inventory figure published.'},{k:'US resupply stonewalling',v:'Middle East Eye (Mar 2026): US is stonewalling Gulf state requests to replenish interceptors. At least one Gulf state was brushed off when asking about replenishment. This makes remaining stock more critical — no in-flight top-up confirmed for UAE.'},
+      ],
+      unknown:['Exact split between UAE-sovereign and US-operated system firings — US stock charged separately','Whether THAAD Al Ruwais radar is fully destroyed or partially operational — CNN satellite imagery shows damage but US has not confirmed full loss','Whether Cheongung II stock replenished from Korea during conflict','AIM-9/MICA consumption — no fighter ammo stocks published; no confirmed resupply','Whether 2.0 or higher shots/BM was actually used — MoD does not publish engagement ratios'],
+    }
+  },
+
+  qatar:{
+    name:'Qatar',flag:'🇶🇦',status:'critical',bm_status:'critical',drone_status:'strained',
+    sub:'Al Udeid · PAC-3 + PAC-2 mix · F-15QA + Rafale + Typhoon active · Navy (Aster 30 + RAM + 30mm) confirmed Mar 2',
+    inbound:{
+      bm:{confirmed:101,est:130,source:'MoFA cumulative Day 4 (Mar 4); event-only after that',conf:'low',
+        rows:[['Day 1 (Feb 28)','65 detected, 63 intercepted, 2 hit Al Udeid'],['Day 3 (+7 BMs)','Intercepted (MoD)'],['Day 4 cumulative','101 BMs, 98 intercepted — last hard figure'],['Mar 13','9 detected, 8 intercepted, 1 uninhabited'],['Mar 17 (Day 18)','13 of 14 intercepted (Al Jazeera)'],['Est. total','~120–140 BMs across 18 days']],
+        note:'Qatar stopped publishing cumulative totals after Day 4. All post-Mar-4 figures are per-event only. Total is a reconstruction, not official.'},
+      cm:{confirmed:3,est:5,source:'MoFA Day 4',conf:'low',
+        rows:[['By Day 4','3 CMs confirmed'],['After Day 4','Not disaggregated']],
+        note:'CMs may be included in missile counts after Day 4 without being broken out.'},
+      drone:{confirmed:39,est:100,source:'MoFA Day 4 cumulative; events after',conf:'low',
+        rows:[['Day 1','12 detected, 11 intercepted'],['Day 4 cumulative','39 detected, 24 intercepted, 15 struck'],['Mar 7','10 fired, 9 intercepted'],['Navy (Mar 2)','Confirmed drones engaged — count not given'],['RAF Typhoon (Mar 2)','1 drone confirmed downed']],
+        note:'Qatar faces far fewer drones than UAE — Iran targets Al Udeid with BMs; drones used for economic targets elsewhere.'},
+    },
+    systems:[
+      {nm:'PAC-3 MSE',rl:'Tier 2 · only BM system',pre:180,rem:25,lo:10,hi:45,pct:14,conf:'low',note:'~1.5 shots/BM (Al Udeid high-value = aggressive shoot-look-shoot). US-operated stock charged to US pool, not Qatar sovereign.'},
+      {nm:'PAC-2 GEM-T',rl:'Tier 2 · CM + drone backup',pre:80,rem:25,lo:10,hi:40,pct:31,conf:'very low',note:'Legacy batteries. Confirmed active in this conflict (Defence Talks imagery analysis).'},
+      {nm:'NASAMS',rl:'Tier 2/3 · cruise + drone',pre:40,rem:18,lo:10,hi:28,pct:45,conf:'very low',note:'AIM-120C-7 as interceptor. Cannot intercept ballistic missiles.'},
+      {nm:'F-15QA / Rafale / Typhoon',rl:'Airborne · AIM-120/AIM-9/Meteor',pre:1200,rem:1000,lo:800,hi:1200,pct:83,conf:'very low',note:'F-15QA downed 2 Iranian Su-24 (Mar 2 — first QEAF air-to-air kills). RAF Typhoons (8) confirmed active. 27mm cannon doctrine for Shaheds.'},
+      {nm:'Aster 30 (Al Zubarah corvettes)',rl:'Naval · CM + aircraft',pre:72,rem:67,lo:55,hi:72,pct:93,conf:'very low',note:'4 corvettes × 16 cells + LPD Al Fulk × 8 = 72 max. Navy confirmed active Mar 2 — analyst assessment: RAM/Marlin used for drones; Aster 30 likely preserved for cruise/aircraft.'},
+      {nm:'RAM + 30mm Marlin (naval)',rl:'Tier 3 · naval drone layer',pre:105,rem:90,lo:70,hi:105,pct:86,conf:'very low',note:'4 corvettes × 21-cell RAM = 84 RAM rounds. Primary naval drone layer Mar 2. RAM is US-made RIM-116 — highly effective vs. Shaheds.'},
+    ],
+    calc:{
+      eng:[
+        {threat:'Ballistic missile',primary:'PAC-3 MSE',secondary:'PAC-2 (backup) · US Patriot at Al Udeid',note:'~1.5 rds/BM. US-operated stock absorbs ~30% of Al Udeid BM intercepts.'},
+        {threat:'Cruise missile',primary:'PAC-2 / NASAMS',secondary:'F-15QA (AIM-120) · Aster 30 (naval)',note:'~1.2 rds/CM'},
+        {threat:'Shahed drone',primary:'F-15QA / Rafale / Typhoon aircraft',secondary:'NASAMS · Naval RAM / 30mm Marlin',note:'~1 AAM per drone; Navy confirmed Mar 2 for drones'},
+      ],
+      assume:[
+        {k:'PAC-3 vs US-operated split',v:'US Patriot at Al Udeid fires from US stock, not Qatar sovereign. Assumed ~30% of BM intercepts at Al Udeid charged to US.'},
+        {k:'PAC-2 confirmed active',v:'Defence Talks imagery analysis confirms PAC-2 rounds being fired. PAC-2 assumed primary for CMs and backup BM shots.'},
+        {k:'Aster 30 likely preserved',v:'Naval News / Army Recognition analyst assessment: RAM and 30mm Marlin engaged drones on Mar 2, not Aster 30. Aster 30 likely largely intact.'},
+        {k:'Total BM figure',v:'Only confirmed to 101 by Day 4. ~120–140 total is a reconstruction. Wide uncertainty.'},
+      ],
+      unknown:['How many BM intercepts were US-operated vs. Qatar sovereign','Exact PAC-2 starting stock — not in any DSCA notification','Whether Aster 30 was used at all for BMs — not confirmed','Total inbound after Day 4 — Qatar stopped publishing cumulative figures'],
+    }
+  },
+
+  saudi:{
+    name:'Saudi Arabia',flag:'🇸🇦',status:'strained',bm_status:'adequate',drone_status:'adequate',
+    sub:'25 Patriot batteries · Prince Sultan AB primary BM target · Silent Hunter laser (capability — unconfirmed in conflict) · Largest Gulf fighter fleet',
+    inbound:{
+      bm:{confirmed:null,est:36,source:'Arab News tally of Saudi Press Agency event releases — Mar 17',conf:'med',
+        rows:[['Method','Arab News compiled from individual MoD/SPA event releases — NOT an MoD cumulative'],['BM + CM total (est.)','~36'],['Confirmed events','2 BMs at Prince Sultan (Mar 5); 1 CM east al-Kharj (Mar 7)']],
+        note:'Saudi Arabia never publishes cumulative totals. All figures are journalist tallies of individual event releases. The 36 BM+CM total is the most widely cited but remains a media estimate.'},
+      cm:{confirmed:null,est:5,source:'Arab News tally — included within 36',conf:'low',
+        rows:[['CMs','Included in "36 BMs+CMs" — not broken out'],['Note','Saudi MoD does not disaggregate BM vs. CM']],
+        note:'CM/BM split unknown.'},
+      drone:{confirmed:null,est:438,source:'Arab News tally of SPA releases — Mar 17',conf:'med',
+        rows:[['Total (media tally)','~438'],['~278 toward Eastern Province','Arab News geographic breakdown'],['Shaybah oilfield','Multiple confirmed events'],['Mar 16 single day','37 drones in east (MoD confirmed)']],
+        note:'Drone figure more reliable than BM/CM — drone events individually reported with counts. Still a tally not a cumulative.'},
+    },
+    systems:[
+      {nm:'PAC-3 MSE',rl:'Tier 2 · BMs + CMs · 25 batteries',pre:600,rem:555,lo:480,hi:620,pct:93,conf:'low',note:'~1.4 shots/BM; low BM volume (~31 est.) limits draw. 730-round Jan 2026 order on 25-month cycle — not yet delivered.'},
+      {nm:'PAC-2 GEM-T',rl:'Tier 2 · CM + backup BM',pre:400,rem:370,lo:300,hi:420,pct:93,conf:'very low',note:'300 GEM-T ordered Aug 2022 to replenish Houthi-consumed stocks. Large stock relatively intact.'},
+      {nm:'THAAD',rl:'Tier 1 · BMs · 1 battery ⚠',pre:48,rem:5,lo:0,hi:15,pct:10,conf:'low',note:'⚠ AN/TPY-2 radar reportedly damaged at Prince Sultan. Without radar the battery cannot engage regardless of remaining rounds.'},
+      {nm:'Silent Hunter laser',rl:'Tier 3 · drones (UNCONFIRMED)',pre:null,rem:null,lo:null,hi:null,pct:100,conf:'unconfirmed',note:'Chinese CASIC system. Operational status in this specific conflict NOT confirmed. Listed as capability only.'},
+      {nm:'Crotale / Shahine',rl:'Tier 3 · drones',pre:300,rem:240,lo:180,hi:280,pct:80,conf:'very low',note:'French legacy short-range SAM. Effective vs. Shaheds.'},
+      {nm:'F-15S/SA + Typhoon',rl:'Airborne · ~220 fighters',pre:3000,rem:2700,lo:2200,hi:3000,pct:90,conf:'very low',note:'Largest Gulf fighter fleet. Aircraft likely absorbing bulk of ~438 drone intercepts.'},
+    ],
+    calc:{
+      eng:[
+        {threat:'Ballistic missile',primary:'PAC-3 MSE',secondary:'THAAD (⚠ radar status)',note:'THAAD radar reportedly damaged — may be non-operational. PAC-3 as primary.'},
+        {threat:'Cruise missile',primary:'PAC-2 GEM-T',secondary:'PAC-3 MSE · F-15 (AIM-120)',note:'~1.2 rds/CM'},
+        {threat:'Shahed drone',primary:'F-15 / Typhoon aircraft',secondary:'Crotale/Shahine',note:'Silent Hunter NOT confirmed in this conflict'},
+      ],
+      assume:[
+        {k:'No official cumulative figures',v:'All Saudi totals are media tallies. The 36 BM+CM / 438 drone figures could be significantly off.'},
+        {k:'THAAD radar status',v:'AN/TPY-2 at Prince Sultan reportedly damaged. If confirmed, Saudi THAAD cannot engage regardless of rounds remaining.'},
+        {k:'Silent Hunter',v:'Listed as a Saudi capability but NOT confirmed operationally used in this conflict. If active it would significantly reduce other layer draw.'},
+        {k:'Low BM volume',v:'Saudi receives relatively few BMs — Iran focuses BMs on Gulf bases (Qatar/Kuwait/UAE/Bahrain) and uses drones for Saudi economic targets.'},
+      ],
+      unknown:['Whether Silent Hunter has been operationally used in this conflict','THAAD radar operational status — conflicting reports','PAC-3 vs. PAC-2 engagement split','Saudi total inbound — no cumulative published'],
+    }
+  },
+
+  kuwait:{
+    name:'Kuwait',flag:'🇰🇼',status:'strained',bm_status:'strained',drone_status:'strained',
+    sub:'Ali Al Salem · Camp Arifjan · PAC-2/PAC-3 mix · US Patriot at bases · ⚠ Day 1 friendly fire: 3 US F-15Es downed',
+    inbound:{
+      bm:{confirmed:97,est:250,source:'Kuwait MoD 36hr cumulative (Mar 1) — only hard figure published',conf:'low',
+        rows:[['By end Mar 1 (36 hrs)','97 BMs — only Kuwait MoD cumulative published'],['After Mar 1','Individual events only'],['The National (Mar 16)','684 total projectiles — media aggregate, NOT Kuwait MoD'],['BM share est.','~35–40% of total = ~240–270 BMs est.']],
+        note:'Kuwait published one 36-hour figure then switched to event-only. The 684 total is The National\'s cross-GCC comparison, not Kuwait MoD.'},
+      cm:{confirmed:null,est:20,source:'Estimated — no Kuwait figure',conf:'low',
+        rows:[['Cruise missiles','Not disaggregated in any Kuwait MoD statement']],
+        note:'Kuwait MoD groups all missiles without BM/CM split.'},
+      drone:{confirmed:283,est:420,source:'Kuwait MoD 36hr cumulative (Mar 1)',conf:'low',
+        rows:[['By end Mar 1','283 drones confirmed'],['CTP-ISW Day 3','384 drones (third-party)'],['The National (Mar 16)','~420–440 implied in 684 total']],
+        note:'Highest drone density per capita in region in first 36 hours — reflects Ali Al Salem + Arifjan + Buehring all targeted.'},
+    },
+    systems:[
+      {nm:'PAC-3 MSE',rl:'Tier 2 · BMs · sovereign',pre:84,rem:34,lo:15,hi:55,pct:40,conf:'very low',note:'84 MSE from 2020 $800M package; Jan 2026 upgrade likely added more. ~35 sovereign BM intercepts assumed.'},
+      {nm:'PAC-3 CRI',rl:'Tier 2 · BMs · older variant',pre:60,rem:30,lo:10,hi:45,pct:50,conf:'very low',note:'60 CRI from 2012 order. Older hit-to-kill variant.'},
+      {nm:'PAC-2 GEM-T',rl:'Tier 2 · CM + drones · large stock',pre:300,rem:180,lo:120,hi:240,pct:60,conf:'very low',note:'210 original (1993) + ~209 GEM-T (2010) = largest GCC PAC-2 stock. Primary non-BM layer.'},
+      {nm:'US Patriot (US-operated)',rl:'Tier 2 · Arifjan + Buehring',pre:null,rem:null,lo:null,hi:null,pct:50,conf:'unconfirmed',note:'US stock — not Kuwait sovereign. Absorbs ~50% of base intercepts. Charged to US global pool.',ext:true},
+      {nm:'F/A-18 + Typhoon (incl. US)',rl:'Airborne · drone primary est.',pre:1200,rem:900,lo:700,hi:1100,pct:75,conf:'very low',note:'⚠ Friendly fire Day 1: 3 US F-15Es downed by Kuwait F/A-18 (ACLED confirmed) — deconfliction failure. Kuwait legacy Hornets + new Typhoons + US F/A-18E/F at Arifjan.'},
+    ],
+    calc:{
+      eng:[
+        {threat:'Ballistic missile',primary:'PAC-3 MSE / CRI',secondary:'US Patriot (50% of base BMs)',note:'US-operated absorbs ~50% of sovereign base defence'},
+        {threat:'Cruise missile',primary:'PAC-2 GEM-T',secondary:'F/A-18 (AIM-120)',note:'~1.2 rds/CM'},
+        {threat:'Shahed drone',primary:'F/A-18 + Typhoon aircraft',secondary:'PAC-2 GEM-T',note:'⚠ Day 1: 3 US F-15Es shot down by Kuwait F/A-18 — multi-layer deconfliction failure'},
+      ],
+      assume:[
+        {k:'US vs Kuwait split',v:'Impossible to determine. US Patriot at Arifjan/Buehring fires from US stock. Assumed ~50% of BM intercepts at US bases charged to US, not Kuwait.'},
+        {k:'PAC-2 stock estimate',v:'Kuwait has largest GCC PAC-2 stock. Original 1993 (210) + 2010 GEM-T (~209) minus ~120 est. attrition over 30 years = ~300 pre-crisis estimate.'},
+        {k:'Friendly fire incident',v:'Day 1: 3 US F-15Es downed by Kuwait F/A-18. Real operational risk from multi-layer simultaneous engagement.'},
+        {k:'Total inbound',v:'97 BMs / 283 drones confirmed only for first 36 hours. The National 684 total (Mar 16) is a media aggregate. Wide uncertainty.'},
+      ],
+      unknown:['US vs Kuwait sovereign intercept split — not published','How much Jan 2026 upgrade package added to MSE stock','Whether Kuwait Typhoons deployed for air defence vs. strike roles','Actual BM/CM split — Kuwait MoD never disaggregates'],
+    }
+  },
+
+  bahrain:{
+    name:'Bahrain',flag:'🇧🇭',status:'critical',bm_status:'critical',drone_status:'strained',
+    sub:'NSA Bahrain · US 5th Fleet HQ struck Day 1 · Smallest sovereign force · US Aegis is primary backstop',
+    inbound:{
+      bm:{confirmed:null,est:100,source:'BNA Day 18 gives 129 "missiles" — BM/CM not split',conf:'low',
+        rows:[['Total "missiles" Day 18','129 (BNA confirmed)'],['BM vs. CM','NOT disaggregated by Bahrain MoD'],['BM estimate','~75–110 (est. ~80% of missile total)'],['Day 1 (Breaking Defense)','45 missiles + 9 drones']],
+        note:'Bahrain publishes regular cumulative totals but never splits "missiles" into BM vs. CM. BM figure is estimated at ~80% of missile total based on regional patterns.'},
+      cm:{confirmed:null,est:25,source:'Estimated as ~20% of 129 "missiles"',conf:'low',
+        rows:[['Cruise missiles','Not separately reported'],['Estimate','~19–29 CMs']],
+        note:'CM estimate highly uncertain. Could be higher if Iran specifically targeted 5th Fleet with cruise missiles.'},
+      drone:{confirmed:221,est:null,source:'BNA Day 18 cumulative',conf:'med',
+        rows:[['Total drones Day 18','221 (BNA confirmed)'],['Day 1','9 drones'],['Day 3 (CTP-ISW)','91 drones'],['Day 16','215 cumulative']],
+        note:'Drone figures more reliable — BNA published consistent cumulative counts.'},
+    },
+    systems:[
+      {nm:'PAC-3 MSE',rl:'Tier 2 · sovereign · ~3 batteries',pre:150,rem:25,lo:5,hi:50,pct:17,conf:'low',note:'Sovereign stock likely near-exhausted. No DSCA missile quantity published for Bahrain. ~3 batteries × ~50 MSE each = ~150 est.'},
+      {nm:'US 5th Fleet (Aegis SM-2/3/6)',rl:'Naval · primary backstop',pre:null,rem:null,lo:null,hi:null,pct:60,conf:'unconfirmed',note:'5th Fleet HQ struck Day 1 but still operational. SM-3 for BMs; SM-6 dual-role for cruise + drones. US stock — not sovereign.',ext:true},
+      {nm:'US Patriot (US-operated)',rl:'Tier 2 · US bases',pre:null,rem:null,lo:null,hi:null,pct:60,conf:'unconfirmed',note:'US stock — not sovereign Bahrain.',ext:true},
+      {nm:'F-16C/D (Bahrain)',rl:'Airborne · AIM-9/AIM-120',pre:400,rem:250,lo:180,hi:320,pct:63,conf:'very low',note:'22 F-16C/D est. ~1 AAM per drone; aircraft handling ~60% of drone intercepts.'},
+    ],
+    calc:{
+      eng:[
+        {threat:'Ballistic missile',primary:'US Aegis SM-3 (5th Fleet)',secondary:'PAC-3 MSE (sovereign)',note:'Sovereign PAC-3 likely near-exhausted. US Aegis is the real BMD layer.'},
+        {threat:'Cruise missile',primary:'US Aegis SM-6',secondary:'PAC-3 MSE · F-16 (AIM-120)',note:'~1.2 rds/CM'},
+        {threat:'Shahed drone',primary:'F-16C/D (AIM-9)',secondary:'US F/A-18E/F (carrier)',note:'Bahrain heavily US-dependent for all intercepts'},
+      ],
+      assume:[
+        {k:'Sovereign vs. US split',v:'Bahrain is most US-dependent state. Assumed US assets absorb >50% of all intercepts from Day 2 onward.'},
+        {k:'BM/CM split',v:'Bahrain MoD never disaggregates. 129 "missiles" split into BM/CM is a rough estimate — actual could differ significantly.'},
+        {k:'PAC-3 stock',v:'No published DSCA missile quantity for Bahrain. ~3 batteries × ~50 MSE each = ~150 est. Near-exhausted if sovereign PAC-3 absorbing BMs.'},
+        {k:'5th Fleet status',v:'Struck Day 1. Reporting indicates naval air defence continued operating. Aegis ships are the primary BMD layer.'},
+      ],
+      unknown:['US vs Bahrain sovereign intercept split — not published','Whether 5th Fleet Aegis ships rotated in fresh SM-3/SM-6 stocks','Actual Bahrain PAC-3 pre-crisis stock — never published','BM vs. CM split — Bahrain never disaggregates'],
+    }
+  },
+
+  israel:{
+    name:'Israel',flag:'🇮🇱',status:'critical',bm_status:'critical',drone_status:'adequate',
+    sub:'Arrow 3+2 near-exhausted · US THAAD/SM-3 now primary upper-tier · Iron Dome intact · Dual front: Iran + Hezbollah from Mar 2',
+    inbound:{
+      bm:{confirmed:null,est:290,source:'INSS Data Analytics Center — most authoritative public estimate (to Mar 15)',conf:'low',
+        rows:[['INSS estimate (to Mar 15)','~290 BMs'],['IDF Day 3 (CTP-ISW)','"100+ Iranian drones intercepted" — partial only'],['Launch rate context','IDF: 300 launchers destroyed; 70% drop in missile fire toward Israel by Day 3'],['Semafor Mar 14','US officials: Israel "critically low" on ABM interceptors']],
+        note:'All Israel figures are classified. INSS is the most credible public estimate. IDF has never published a cumulative intercept count for this conflict.'},
+      cm:{confirmed:null,est:80,source:'INSS / Long War Journal estimates',conf:'low',
+        rows:[['Cruise missiles','Not publicly disaggregated'],['Estimate','~60–100 CMs (INSS + regional ratios)']],
+        note:'CMs engage David\'s Sling and fighter aircraft. Not separately tracked in public reporting.'},
+      drone:{confirmed:null,est:500,source:'INSS Data Analytics Center (to Mar 15)',conf:'low',
+        rows:[['INSS estimate','~500 drones'],['Context','Far fewer drones than UAE (1,672) — Iran uses BMs primarily vs. Israel; drones primarily vs. Gulf'],['Hezbollah addition','From Mar 2: simultaneous Hezbollah rocket/drone front — not in these Iran figures']],
+        note:'Hezbollah rocket/drone volumes from Mar 2 are NOT included here. The dual-front draw on Iron Dome and David\'s Sling is the critical complicating factor.'},
+    },
+    systems:[
+      {nm:'Arrow 3',rl:'Tier 1 · exo-atm · BMs only',pre:80,rem:8,lo:3,hi:15,pct:10,conf:'low',note:'Entered Mar 2026 already depleted from Jun 2025 war. ~1.0 shots/BM at upper tier. Cannot engage drones.'},
+      {nm:'Arrow 2',rl:'Tier 1 · endo-atm · BMs only',pre:120,rem:12,lo:5,hi:25,pct:10,conf:'low',note:'Terminal phase backup. Near-zero. Being replaced by Arrow 4 (IOC mid-2026). Cannot engage drones.'},
+      {nm:"David's Sling",rl:'Tier 2 · MRBM + CM + submunitions',pre:100,rem:20,lo:8,hi:35,pct:20,conf:'low',note:'Also fires at cluster submunitions after Arrow intercepts a BM. Dual Lebanon + Iran front from Mar 2.'},
+      {nm:'Iron Dome (Tamir)',rl:'Tier 3 · drones + rockets (NOT BMs)',pre:3000,rem:2400,lo:2000,hi:2800,pct:80,conf:'med',note:'CANNOT intercept ballistic missiles directly. Does engage submunitions falling after BM intercept. Hezbollah front from Mar 2 adds ~300 more rounds draw not shown in Iran figures. $5.2B US surge + Arkansas plant.'},
+      {nm:'Iron Beam',rl:'Tier 3 · drones (unlimited)',pre:null,rem:null,lo:null,hi:null,pct:100,conf:'low',note:'~$3/kill. Cannot engage BMs. Absorbs ~20–30% of drone volume at near-zero cost.',ext:true},
+      {nm:'US THAAD (US-operated)',rl:'Tier 1 · now primary upper-tier',pre:null,rem:null,lo:null,hi:null,pct:50,conf:'very low',note:'US stock — charged to depleted US global pool. Now primary upper-tier BMD as Arrow 3+2 exhausted. Est. ~30 rounds fired from Israel.',ext:true},
+      {nm:'F-35I / F-16I / F-15I',rl:'Airborne · modified AIM-9M + AIM-120',pre:3000,rem:2600,lo:2000,hi:3000,pct:87,conf:'very low',note:'AIM-9M seekers modified for Shahed intercept (FPRI 2025). 48 F-35I as of Jan 2026. Dual Iran/Lebanon front.'},
+    ],
+    calc:{
+      eng:[
+        {threat:'Ballistic missile',primary:'Arrow 3 (exo) → Arrow 2 (endo)',secondary:'US THAAD (now primary as Arrow exhausted)',note:"Arrow 3+2 near-exhausted. US THAAD carrying upper-tier BMD burden."},
+        {threat:'Cruise missile',primary:"David's Sling",secondary:'F-35I / F-16I (AIM-120)',note:"~1.2 rds/CM; David's Sling near-exhausted"},
+        {threat:'Shahed drone',primary:'Iron Beam (~30% at near-zero cost)',secondary:'Iron Dome (Tamir) → F-16I/F-35I',note:'Cluster submunitions after BM intercept also draw Iron Dome — not BM intercept itself'},
+      ],
+      assume:[
+        {k:'Arrow 3+2 pre-crisis stock',v:'Entered Mar 2026 already depleted from Jun 2025 war per FPRI analysis. US officials\' "critically low" signal (Semafor Mar 14) consistent with ~10–20 rounds remaining.'},
+        {k:'Cluster munition effect',v:'~50% of Iranian BMs carried cluster warheads. Arrow/David\'s Sling intercepts the BM. Released submunitions fall at low altitude and are engaged by Iron Dome — not the BM itself. Accelerates Tamir depletion.'},
+        {k:'Dual-front draw',v:'From Mar 2 Hezbollah joined. David\'s Sling and Iron Dome now firing on two fronts simultaneously. Hezbollah rocket volumes not in figures shown here.'},
+        {k:'Iron Dome replenishment',v:'Arkansas R2S plant (Rafael/Raytheon) operational. $5.2B US surge. Best-replenished Israeli system. Tamir stocks being actively resupplied.'},
+      ],
+      unknown:['All Arrow 2/3 and David\'s Sling figures are classified — INSS estimates only','Hezbollah rocket/drone volume vs. Iron Dome draw (separate from Iran figures here)','Whether US THAAD resupplied from Korea drawdown','Iron Beam operational tempo and thermal limits'],
+    }
+  },
+
+  us:{
+    name:'US (fwd. deployed)',flag:'🇺🇸',status:'critical',bm_status:'critical',drone_status:'strained',
+    sub:'THAAD globally critical · PAC-3 fwd. stocks strained · SM-3 best-positioned · Korea drawdown underway · 2 AN/TPY-2 radars lost/damaged',
+    inbound:{
+      bm:{confirmed:null,est:300,source:'CENTCOM / CTP-ISW aggregate across all Gulf bases',conf:'low',
+        rows:[['Method','Aggregate across Al Udeid, Arifjan, Buehring, NSA Bahrain, Al Dhafra, Jordan'],['Jordan (Muwaffaq Salti)','THAAD radar destroyed — engagement capacity severely degraded'],['Al Udeid','2 BMs hit Day 1; multiple waves intercepted']],
+        note:'US does not publish intercept counts by base.'},
+      cm:{confirmed:null,est:50,source:'Estimated',conf:'low',rows:[],note:'No US-specific CM intercept count published.'},
+      drone:{confirmed:null,est:500,source:'Estimated across all bases',conf:'low',rows:[],note:'All Gulf US bases under drone attack.'},
+    },
+    systems:[
+      {nm:'THAAD (global)',rl:'Tier 1 · BMs only · 8 batteries total',pre:200,rem:80,lo:50,hi:120,pct:40,conf:'low',note:'~200 usable pre-crisis est. after Jun 2025. Korea drawdown adds ~20–35 interceptors — mostly launchers, few rounds. Delivery gap Jul 2023–Apr 2027.'},
+      {nm:'SM-3 IB/IIA (Aegis)',rl:'Tier 1 · BMs midcourse only',pre:414,rem:339,lo:280,hi:380,pct:82,conf:'med',note:'Best-replenished major BMD system. 66 more due CY2026 (CSIS). Engages BMs in midcourse only.'},
+      {nm:'PAC-3 MSE (fwd. deployed)',rl:'Tier 2 · BMs + CMs · Gulf bases',pre:350,rem:40,lo:10,hi:70,pct:11,conf:'low',note:'800+ rounds fired in first 16 days across all Gulf US bases (CTP-ISW / Breaking Defense). Near-zero forward.'},
+      {nm:'SM-6 / SM-2 (Aegis)',rl:'Tier 2 · CM + drone + BM terminal',pre:200,rem:120,lo:80,hi:160,pct:60,conf:'low',note:'SM-6 dual-role: terminal BM + cruise/drone. Strained by Red Sea ops pre-conflict.'},
+      {nm:'F-15E / F-22 / F-35 / F/A-18',rl:'Airborne · drone + strike',pre:2000,rem:1600,lo:1200,hi:2000,pct:80,conf:'very low',note:'AIM-120 + AIM-9 for drones. Gun kills confirmed. ⚠ 3 F-15Es downed by Kuwait Day 1 — deconfliction failure.'},
+    ],
+    calc:{
+      eng:[
+        {threat:'Ballistic missile',primary:'THAAD (upper) → SM-3 (midcourse)',secondary:'PAC-3 MSE (terminal)',note:'THAAD globally critical. Jordan radar destroyed — that battery non-operational.'},
+        {threat:'Cruise missile',primary:'PAC-3 MSE',secondary:'SM-6 (Aegis) · F-15E (AIM-120)',note:'~1.2 rds/CM'},
+        {threat:'Shahed drone',primary:'SM-6 (Aegis dual-role)',secondary:'F-15E (gun / AIM-9)',note:'⚠ Kuwait Day 1: 3 US F-15Es shot down by Kuwait F/A-18 — deconfliction risk real'},
+      ],
+      assume:[
+        {k:'THAAD remaining',v:'~200 usable pre-crisis (CSIS P-21). Jun 2025 consumed ~120–150. Korea drawdown adds launchers primarily, few rounds given near-empty battery post-Jun 2025.'},
+        {k:'PAC-3 fwd. near-zero',v:'CTP-ISW + Breaking Defense: >800 rounds fired in first 16 days across all Gulf US deployments. If pre-crisis fwd. stock was ~350, near-zero by Day 16.'},
+        {k:'AN/TPY-2 radar losses',v:'Radar destroyed at Muwaffaq Salti (Jordan). Second radar damaged at Prince Sultan (Saudi). Launchers without radar cannot fire. Potentially more damaging than round depletion.'},
+        {k:'SM-3 best-positioned',v:'CSIS: 66 more SM-3 due CY2026. Not as consumed as THAAD. 4 Aegis destroyers in theatre. Most resilient major BMD system.'},
+      ],
+      unknown:['How many THAAD rounds truly remain — CSIS shows delivery gap Jul 2023–Apr 2027','Whether Aegis ships rotated in fresh SM-3/SM-6 stocks mid-conflict','Korea THAAD battery exact round count post-Jun 2025','Which specific US bases account for which intercepts — not disaggregated'],
+    }
+  },
+};
+
+// ══════════════════════════════════════════════════════
+// HELPERS
+// ══════════════════════════════════════════════════════
+const SC = {critical:'sb-critical',strained:'sb-strained',adequate:'sb-adequate'};
+const SL = {critical:'CRITICAL',strained:'STRAINED',adequate:'ADEQUATE'};
+function bcol(p){return p<=20?'var(--red)':p<=50?'var(--amber)':'var(--green)';}
+function fmtV(c,e){if(c!==null&&c!==undefined)return{v:c.toLocaleString(),est:false};if(e!==null&&e!==undefined)return{v:'~'+e.toLocaleString(),est:true};return{v:'—',est:false};}
+function confTag(c){const m={high:'ctag-h',med:'ctag-m',low:'ctag-l','very low':'ctag-l',unconfirmed:'ctag-l'};const l={high:'● HIGH',med:'◐ MED',low:'○ LOW','very low':'○ V.LOW',unconfirmed:'? UNCONF'};return`<span class="ctag ${m[c]||'ctag-l'}">${l[c]||c}</span>`;}
+function confSym(c){const m={high:'cs-h',med:'cs-m',low:'cs-l','very low':'cs-l',unconfirmed:'cs-l'};const l={high:'● HIGH',med:'◐ MED',low:'○ LOW','very low':'○ V.LOW',unconfirmed:'? UNCONF'};return`<span class="conf-s ${m[c]||'cs-l'}">${l[c]||c}</span>`;}
+
+// ══════════════════════════════════════════════════════
+// OVERVIEW
+// ══════════════════════════════════════════════════════
+function buildOverview(){
+  document.getElementById('c-grid').innerHTML=Object.entries(DATA).map(([id,d])=>{
+    const bm=fmtV(d.inbound.bm.confirmed,d.inbound.bm.est);
+    const cm=fmtV(d.inbound.cm.confirmed,d.inbound.cm.est);
+    const dr=fmtV(d.inbound.drone.confirmed,d.inbound.drone.est);
+    const bars=d.systems.filter(s=>s.pct!==null&&s.pct!==undefined&&s.conf!=='unconfirmed').slice(0,4).map(s=>{
+      const c=bcol(s.pct);
+      const rv=s.rem!==null?(s.lo!==null?s.lo+'–'+s.hi:s.rem):'pool';
+      return`<div class="cap-row"><div class="cap-lbl" title="${s.nm}">${s.nm}</div><div class="cap-track"><div class="cap-fill" style="width:${s.pct}%;background:${c}"></div></div><div class="cap-pct" style="color:${c}">${rv}</div></div>`;
+    }).join('');
+    const bmConf=d.inbound.bm.conf; const oc=bmConf==='high'?'high':bmConf==='med'?'med':'low';
+    const dc={high:'#22c55e',med:'#f59e0b',low:'#ef4444'};
+    return`<div class="c-card" onclick="showCountry('${id}')">
+      <div class="c-top">
+        <div class="c-name-wrap"><span class="c-flag">${d.flag}</span><div><div class="c-name">${d.name}</div></div></div>
+        <div class="badge-pair">
+          <span class="sbadge-sm ${SC[d.bm_status||d.status]}"><span class="badge-icon">🚀</span>${SL[d.bm_status||d.status]}</span>
+          <span class="sbadge-sm ${SC[d.drone_status||d.status]}"><span class="badge-icon">✈</span>${SL[d.drone_status||d.status]}</span>
+        </div>
+      </div>
+      <div class="c-body">
+        <div class="ib-row">
+          <div class="ib-chip"><div class="ib-num bm">${bm.v}</div><div class="ib-lbl">BM${bm.est?' est.':''}</div><div class="ib-conf ic-${d.inbound.bm.conf[0]}">${d.inbound.bm.conf}</div></div>
+          <div class="ib-chip"><div class="ib-num cm">${cm.v}</div><div class="ib-lbl">CM${cm.est?' est.':''}</div><div class="ib-conf ic-${d.inbound.cm.conf[0]}">${d.inbound.cm.conf}</div></div>
+          <div class="ib-chip"><div class="ib-num dr">${dr.v}</div><div class="ib-lbl">Drone${dr.est?' est.':''}</div><div class="ib-conf ic-${d.inbound.drone.conf[0]}">${d.inbound.drone.conf}</div></div>
+        </div>
+        <div class="cap-rows">${bars}</div>
+      </div>
+      <div class="c-foot">
+        <div class="c-conf"><div class="cdot" style="background:${dc[oc]}"></div>Data: ${oc}</div>
+        <div class="c-cta">Detail →</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ══════════════════════════════════════════════════════
+// DETAIL
+// ══════════════════════════════════════════════════════
+function showCountry(id){
+  const d=DATA[id];
+  document.getElementById('d-flag').textContent=d.flag;
+  document.getElementById('d-name').textContent=d.name;
+  document.getElementById('d-sub').textContent=d.sub;
+  const bb=document.getElementById('d-badge-bm');
+  bb.innerHTML='<span class="badge-icon">🚀</span>'+SL[d.bm_status||d.status];
+  bb.className='sbadge-sm '+SC[d.bm_status||d.status];
+  const bd=document.getElementById('d-badge-drone');
+  bd.innerHTML='<span class="badge-icon">✈</span>'+SL[d.drone_status||d.status];
+  bd.className='sbadge-sm '+SC[d.drone_status||d.status];
+
+  const bm=fmtV(d.inbound.bm.confirmed,d.inbound.bm.est);
+  const cm=fmtV(d.inbound.cm.confirmed,d.inbound.cm.est);
+  const dr=fmtV(d.inbound.drone.confirmed,d.inbound.drone.est);
+  const tot=(d.inbound.bm.confirmed||d.inbound.bm.est||0)+(d.inbound.cm.confirmed||d.inbound.cm.est||0)+(d.inbound.drone.confirmed||d.inbound.drone.est||0);
+
+  const s1sum=`${bm.v} BM · ${cm.v} CM · ${dr.v} drone · ~${tot.toLocaleString()} total`;
+
+  const makeBlock=(t,cls,ibt,data)=>{
+    const rows=(data.rows||[]).map(r=>`<div class="ib-row-d"><span class="ib-row-k">${r[0]}</span><span class="ib-row-v">${r[1]}</span></div>`).join('');
+    return`<div class="ib-block"><div class="ib-blk-title ${ibt}">${t}</div>${rows}${confTag(data.conf)}${data.note?`<div class="src-note">${data.note}</div>`:''}</div>`;
+  };
+
+  const sec1=`<div class="acc">
+    <div class="acc-hdr" onclick="toggleAcc(this)">
+      <div class="acc-left"><span class="acc-num">01</span><span class="acc-title">Inbound — what Iran fired</span></div>
+      <div style="display:flex;align-items:center;gap:10px"><span class="acc-summary">${s1sum}</span><span class="acc-arrow">▼</span></div>
+    </div>
+    <div class="acc-body">
+      <div class="ib-grid">
+        ${makeBlock('Ballistic missiles','bm','ibt-bm',d.inbound.bm)}
+        ${makeBlock('Cruise missiles','cm','ibt-cm',d.inbound.cm)}
+        ${makeBlock('Drones / Shaheds','drone','ibt-dr',d.inbound.drone)}
+      </div>
+      <div class="src-note">Source: ${d.inbound.bm.source}</div>
+    </div>
+  </div>`;
+
+  const crits=d.systems.filter(s=>s.pct!==null&&s.pct<=20&&s.rem!==null).map(s=>s.nm).join(', ');
+  const s2sum=crits?`Critical: ${crits}`:'See breakdown';
+
+  const trows=d.systems.map(s=>{
+    const rc=s.conf==='unconfirmed'||s.rem===null?`<span class="ext-lbl">${s.ext?'External / US pool':'Unlimited'}</span>`:
+      `<span style="color:${bcol(s.pct)}">${s.lo!==null?s.lo+'–'+s.hi:s.rem}</span>`;
+    const bc=s.conf==='unconfirmed'||s.rem===null?`<span class="ext-lbl" style="font-size:9px">n/a</span>`:
+      `<div class="bar-cell"><div class="bar-s"><div class="bar-f" style="width:${s.pct}%;background:${bcol(s.pct)}"></div></div><span style="font-size:9px;font-family:var(--mono);color:${bcol(s.pct)}">${s.pct}%</span></div>`;
+    return`<tr><td><div class="sys-nm">${s.nm}</div><div class="sys-rl">${s.rl}</div></td><td>${s.pre!==null?s.pre.toLocaleString():'—'}</td><td>${rc}</td><td>${bc}</td><td>${confSym(s.conf)}</td></tr>`;
+  }).join('');
+
+  const cnotes=d.systems.filter(s=>s.note).map(s=>`<div class="cb-row"><span class="cb-k">${s.nm}</span><span class="cb-v">${s.note}</span></div>`).join('');
+
+  const sec2=`<div class="acc">
+    <div class="acc-hdr" onclick="toggleAcc(this)">
+      <div class="acc-left"><span class="acc-num">02</span><span class="acc-title">Interceptor capacity remaining</span></div>
+      <div style="display:flex;align-items:center;gap:10px"><span class="acc-summary">${s2sum}</span><span class="acc-arrow open">▼</span></div>
+    </div>
+    <div class="acc-body open">
+      <table class="cap-tbl"><thead><tr><th>System</th><th>Pre-crisis est.</th><th>Remaining range</th><th>% remaining</th><th>Confidence</th></tr></thead><tbody>${trows}</tbody></table>
+      <div class="consump-block"><div class="cb-title">Consumption notes per system</div>${cnotes}</div>
+    </div>
+  </div>`;
+
+  const er=d.calc.eng.map(e=>`<tr><td class="eng-threat">${e.threat}</td><td class="eng-sys">${e.primary}</td><td class="eng-sys">${e.secondary||'—'}</td><td class="eng-note">${e.note}</td></tr>`).join('');
+  const ar=d.calc.assume.map(a=>`<div class="assum-row"><span class="assum-k">${a.k}</span><span class="assum-v">${a.v}</span></div>`).join('');
+  const ur=d.calc.unknown.map(u=>`<div class="unk-row"><span>·</span><span>${u}</span></div>`).join('');
+
+  const sec3=`<div class="acc">
+    <div class="acc-hdr" onclick="toggleAcc(this)">
+      <div class="acc-left"><span class="acc-num">03</span><span class="acc-title">How we calculated this</span></div>
+      <div style="display:flex;align-items:center;gap:10px"><span class="acc-summary">Engagement doctrine · assumptions · unknowns</span><span class="acc-arrow">▼</span></div>
+    </div>
+    <div class="acc-body">
+      <div class="sec-blk-title" style="margin-bottom:8px">Engagement allocation — which system fires at which threat</div>
+      <table class="eng-tbl"><thead><tr><th>Threat</th><th>Primary layer</th><th>Secondary</th><th>Doctrine note</th></tr></thead><tbody>${er}</tbody></table>
+      <div class="sec-blk-title" style="margin-top:14px">Key assumptions</div>
+      ${ar}
+      <div class="sec-blk-title" style="margin-top:14px">What we cannot know</div>
+      ${ur}
+      <div class="warn-strip" style="margin-top:12px">⚠ Analyst estimates only — derived from open-source procurement data, official MoD intercept statements, and published doctrine. Not official intelligence. No confirmed stockpile figures exist in the public domain. Ranges reflect genuine uncertainty — treat all figures as orders of magnitude, not precise counts.</div>
+    </div>
+  </div>`;
+
+  document.getElementById('d-secs').innerHTML=sec1+sec2+sec3;
+  showView('det');
+}
+
+// ══════════════════════════════════════════════════════
+// SYSTEMS GUIDE
+// ══════════════════════════════════════════════════════
+const SYSDATA = {
+  'Upper-tier BMD':[
+    {nm:'Arrow 3',aka:'Hetz 3 · IAI/Boeing',tgts:['BM'],cost:'Classified',range:'>100 km alt.',spd:'Mach 9',status:'critical',desc:'Exo-atmospheric hit-to-kill. Designed for Iranian MRBM/IRBM. Effectively exhausted. Cannot engage drones.',note:'Entered Mar 2026 already depleted from Jun 2025. Arrow 4 in development for IOC mid-2026.',ops:[{f:'🇮🇱',n:'Israel',s:'critical'},{f:'🇩🇪',n:'Germany (procuring)',s:''}]},
+    {nm:'Arrow 2',aka:'Hetz 2 · IAI/Boeing',tgts:['BM'],cost:'Classified',range:'50–90 km alt.',spd:'Mach 9',status:'critical',desc:'Terminal phase ABM inside atmosphere. Backup to Arrow 3. Near-zero. Cannot engage drones.',note:'Being replaced by Arrow 4.',ops:[{f:'🇮🇱',n:'Israel',s:'critical'}]},
+    {nm:'THAAD',aka:'Lockheed Martin',tgts:['BM'],cost:'$12.7–15M/rd',range:'200 km · 40–150 km alt.',spd:'Mach 8',status:'critical',desc:'Hit-to-kill terminal BMD. 48 interceptors + AN/TPY-2 radar per battery. Cannot engage drones.',note:'534 total delivered US (CSIS). Delivery gap Jul 2023–Apr 2027. AN/TPY-2 radar destroyed Jordan — that battery non-operational.',ops:[{f:'🇺🇸',n:'US global',s:'critical'},{f:'🇦🇪',n:'UAE',s:'critical'},{f:'🇸🇦',n:'Saudi Arabia',s:'critical'}]},
+    {nm:'SM-3 IB/IIA',aka:'Raytheon/Mitsubishi · Aegis',tgts:['BM'],cost:'$9–24M/rd',range:'700 km · exo-atm.',spd:'Mach 13.5',status:'strained',desc:'Sea-launched hit-to-kill midcourse. Aegis ships. Best-replenished major BMD system. Engages BMs in midcourse only.',note:'66 more rounds due CY2026 (CSIS). Most resilient US BMD asset currently.',ops:[{f:'🇺🇸',n:'US Navy (4 destroyers in theatre)',s:'strained'}]},
+  ],
+  'Terminal / medium-tier':[
+    {nm:'PAC-3 MSE',aka:'Lockheed Martin',tgts:['BM','CM','Drone'],cost:'~$4.2M/rd',range:'35 km · 15–25 km alt.',spd:'Mach 5',status:'critical',desc:'Hit-to-kill terminal. GCC backbone. Also capable vs. cruise and Shaheds but at extreme cost premium vs. drones.',note:'620/yr production record 2025. 800+ fired in 16 days Mar 2026. Army revised req\'t 3,376 → 13,773. 25-month production cycle.',ops:[{f:'🇺🇸',n:'US fwd.',s:'critical'},{f:'🇸🇦',n:'Saudi Arabia',s:''},{f:'🇦🇪',n:'UAE',s:'strained'},{f:'🇶🇦',n:'Qatar',s:'critical'},{f:'🇰🇼',n:'Kuwait',s:'strained'},{f:'🇧🇭',n:'Bahrain',s:'critical'}]},
+    {nm:'PAC-2 GEM-T',aka:'Raytheon',tgts:['BM','CM','Drone'],cost:'~$4M/rd',range:'70 km',spd:'Mach 5',status:'strained',desc:'Blast-fragmentation warhead. Effective vs. aircraft, cruise missiles, slower BMs. Confirmed active Qatar this conflict.',note:'Kuwait has largest GCC PAC-2 stock (1993 + 2010). Saudi 2022 replenishment (300 GEM-T). Qatar confirmed in conflict imagery.',ops:[{f:'🇶🇦',n:'Qatar (confirmed active)',s:'critical'},{f:'🇰🇼',n:'Kuwait (large stock)',s:'strained'},{f:'🇦🇪',n:'UAE',s:''},{f:'🇸🇦',n:'Saudi Arabia',s:''}]},
+    {nm:"David's Sling",aka:'Stunner · Rafael/Raytheon',tgts:['BM','CM','Drone'],cost:'~$1M+ est.',range:'300 km',spd:'Mach 7.5',status:'critical',desc:'Mid-tier between Arrow and Iron Dome. Primary vs. MRBM, cruise. Also engages cluster submunitions after Arrow intercepts a BM — not the BM itself.',note:'Classified stock. Near-zero. Dual Iran + Hezbollah front from Mar 2. Does not directly intercept drones.',ops:[{f:'🇮🇱',n:'Israel',s:'critical'}]},
+    {nm:'Cheongung II (KM-SAM)',aka:'LIG Nex1/Hanwha',tgts:['BM','CM','Drone','UAV'],cost:'< Patriot',range:'40 km',spd:'Mach 4',status:'adequate',desc:'South Korean medium SAM. Korean supply chain entirely independent of US/Lockheed bottleneck. First confirmed combat use UAE.',note:'Strategic hedge for UAE — not affected by US export controls.',ops:[{f:'🇦🇪',n:'UAE (first combat use)',s:''}]},
+    {nm:'NASAMS',aka:'Raytheon/Kongsberg',tgts:['CM','Drone','UAV','Acft'],cost:'~$400k–1M/rd',range:'25 km',spd:'Mach 4',status:'strained',desc:'AIM-120 AMRAAM as interceptor. Cannot intercept ballistic missiles.',note:'Limited Qatar stock.',ops:[{f:'🇶🇦',n:'Qatar',s:'critical'}]},
+    {nm:'Aster 30 Block 1',aka:'MBDA',tgts:['BM','CM','Acft'],cost:'~$2M est.',range:'120 km',spd:'Mach 3',status:'adequate',desc:'Naval SAM. Qatar corvettes + LPD Al Fulk. Limited BM terminal capability. Navy confirmed active Mar 2 — analyst assessment: RAM/Marlin used for drones, Aster 30 preserved.',note:'72 Aster 30 rounds max across Qatar\'s fleet. RAM launchers (21-cell × 4 corvettes) are the drone layer.',ops:[{f:'🇶🇦',n:'Qatar (Al Zubarah class + Al Fulk)',s:''}]},
+  ],
+  'Short-range / counter-drone / directed energy':[
+    {nm:'Iron Dome (Tamir)',aka:'Rafael/Raytheon R2S',tgts:['CM','Drone','UAV'],cost:'~$50k/rd',range:'4–70 km',spd:'Mach 2.2',status:'strained',desc:'CANNOT intercept ballistic missiles. Engages submunitions from cluster warheads after Arrow intercepts the BM. Primary layer vs. Hezbollah rockets and Shaheds.',note:'$5.2B US-funded surge. Arkansas plant online. Best-replenished Israeli system. ~40,000 Tamir rounds lifetime.',ops:[{f:'🇮🇱',n:'Israel (~10 batteries)',s:'strained'}]},
+    {nm:'Iron Beam',aka:'Rafael/Elbit',tgts:['Drone','UAV','CM'],cost:'~$3–5 (electricity)',range:'Several km',spd:'Speed of light',status:'adequate',desc:'High-energy laser. Near-zero marginal cost. Cannot intercept BMs. Absorbs ~20–30% of drone volume.',note:'$3 vs. $50k Iron Dome per kill. Thermal limits constrain sustained rate.',ops:[{f:'🇮🇱',n:'Israel (operational from late 2024)',s:''}]},
+    {nm:'Pantsir-S1',aka:'KBP Instrument Design (Russia)',tgts:['CM','Drone','UAV','Acft'],cost:'30mm: ~$5/round',range:'20 km (SAM) · 4 km (gun)',spd:'Mach 2.8 (SAM)',status:'adequate',desc:'Combined 30mm twin cannon + 12 short-range SAMs. Confirmed UAE service and confirmed active in this conflict.',note:'Russian-made. UAE procurement pre-conflict. Cost-effective close-in drone layer.',ops:[{f:'🇦🇪',n:'UAE (confirmed active)',s:''}]},
+    {nm:'Silent Hunter',aka:'CASIC (China)',tgts:['Drone','UAV'],cost:'~$10 est.',range:'~4 km',spd:'Speed of light',status:'adequate',desc:'Chinese counter-drone laser. Independent of Western supply chains.',note:'Saudi Arabia operator. NOT confirmed used in this specific conflict — capability only.',ops:[{f:'🇸🇦',n:'Saudi Arabia (capability — not confirmed in conflict)',s:''}]},
+    {nm:'Skynight',aka:'UAE domestic C-UAS',tgts:['Drone','UAV'],cost:'Low',range:'Point defence',spd:'High',status:'adequate',desc:'UAE domestic counter-drone. Near-zero marginal cost. Combined with Cheongung absorbs ~40% of drone load.',note:'',ops:[{f:'🇦🇪',n:'UAE',s:''}]},
+  ],
+  'Aircraft and non-missile layers':[
+    {nm:'F-16E/F Block 60 + Mirage 2000-9',aka:'UAE · confirmed primary drone layer',tgts:['BM','CM','Drone','Acft'],cost:'AIM-9X ~$500k · Gun ~$50/burst',range:'500–900 km',spd:'Mach 2',status:'adequate',desc:'UAE MoD confirmed these are the PRIMARY drone intercept layer, not PAC-3. AIM-120/AIM-9/MICA for drones. 20mm Vulcan for close gun kills.',note:'UAE govt rebutted Bloomberg explicitly on this point. Sortie-rate limited, not stock-limited.',ops:[{f:'🇦🇪',n:'UAE (confirmed primary drone layer)',s:''}]},
+    {nm:'F-15QA + Rafale + Typhoon',aka:'Qatar mixed fleet · UK RAF',tgts:['BM','CM','Drone','Acft'],cost:'AIM-120 ~$1.5M · 27mm ~$100/burst',range:'1,000–1,850 km',spd:'Mach 1.8–2.5',status:'adequate',desc:'Qatar F-15QA downed 2 Iranian Su-24 (Mar 2 — first QEAF air-to-air kills). RAF Typhoons (8) confirmed active.',note:'27mm Mauser cannon approach-from-behind standard Shahed intercept doctrine for fast jets.',ops:[{f:'🇶🇦',n:'Qatar F-15QA (Su-24 kills confirmed)',s:''},{f:'🇬🇧',n:'UK RAF Typhoon (8 in Qatar)',s:''},{f:'🇫🇷',n:'France Rafale',s:''}]},
+    {nm:'F-35I / F-16I / F-15I',aka:'Israeli Air Force',tgts:['BM','CM','Drone','Acft'],cost:'Modified AIM-9M ~$400k',range:'500–1,100 km',spd:'Mach 1.8–2+',status:'adequate',desc:'AIM-9M seekers modified for Shahed intercept (FPRI 2025). 48 F-35I as of Jan 2026. Dual Iran/Lebanon front.',note:'F-35I primary role was destroying Iranian air defences, not drone intercept.',ops:[{f:'🇮🇱',n:'Israel (all types active)',s:''}]},
+    {nm:'AH-64D/E Apache + helicopter gunships',aka:'Various · M134 minigun',tgts:['Drone','UAV'],cost:'~$1/round (minigun)',range:'Loitering',spd:'300 km/h',status:'adequate',desc:'Shaheds at 185 km/h are within helicopter engagement envelope. Videos confirmed helicopters with miniguns shooting down drones over Gulf cities.',note:'Ukraine tactic now deployed in Gulf. Not stock-limited — fuel limited.',ops:[{f:'🇦🇪',n:'UAE (AH-64D confirmed)'},{f:'🇺🇸',n:'US (AH-64E at bases)'},{f:'🇸🇦',n:'Saudi Arabia'}]},
+    {nm:'Naval RAM + 30mm Marlin',aka:'Qatar Al Zubarah corvettes',tgts:['Drone','UAV','CM'],cost:'RAM ~$450k · 30mm ~$5/round',range:'RAM 9 km · 30mm 2 km',spd:'Mach 2.5 (RAM)',status:'adequate',desc:'Qatar navy confirmed active Mar 2 vs. drones. RAM and 30mm Marlin are the drone layer; Aster 30 reserved for higher threats.',note:'4 corvettes × 21-cell RAM = 84 RAM rounds. RIM-116 highly effective vs. Shaheds.',ops:[{f:'🇶🇦',n:'Qatar Emiri Navy (confirmed active Mar 2)',s:''}]},
+  ],
+};
+
+
+function getSysIllustration(nm) {
+  // Colour palette matching the UI
+  const C = {
+    sky:'#0a1628', ground:'#1a2e1a', metal:'#4a5568', light:'#94a3b8',
+    red:'#ef4444', amber:'#f59e0b', blue:'#3b82f6', green:'#22c55e',
+    navy:'#083863', mid:'#1a3a5c', exhaust:'#fbbf24', beam:'#60a5fa'
+  };
+  const dark = document.body.classList.contains('dark');
+  const bg = dark ? '#0a1628' : '#0d1f3c';
+  const g = dark ? '#1a2e1a' : '#0f2b1a';
+
+  const svgs = {
+
+    'THAAD': `<svg viewBox="0 0 320 110" xmlns="http://www.w3.org/2000/svg">
+      <rect width="320" height="110" fill="${bg}"/>
+      
+      <circle cx="20" cy="15" r="1" fill="white" opacity=".4"/><circle cx="60" cy="8" r="1" fill="white" opacity=".3"/>
+      <circle cx="100" cy="20" r="1" fill="white" opacity=".5"/><circle cx="200" cy="12" r="1" fill="white" opacity=".3"/>
+      <circle cx="280" cy="25" r="1" fill="white" opacity=".4"/><circle cx="240" cy="6" r="1" fill="white" opacity=".3"/>
+      
+      <rect x="0" y="88" width="320" height="22" fill="${g}"/>
+      
+      <rect x="30" y="68" width="90" height="20" rx="3" fill="#2d3748"/>
+      <rect x="28" y="72" width="6" height="16" rx="2" fill="#1a202c"/>
+      
+      <circle cx="50" cy="90" r="7" fill="#1a202c" stroke="#4a5568" stroke-width="1.5"/>
+      <circle cx="50" cy="90" r="3" fill="#4a5568"/>
+      <circle cx="75" cy="90" r="7" fill="#1a202c" stroke="#4a5568" stroke-width="1.5"/>
+      <circle cx="75" cy="90" r="3" fill="#4a5568"/>
+      <circle cx="100" cy="90" r="7" fill="#1a202c" stroke="#4a5568" stroke-width="1.5"/>
+      <circle cx="100" cy="90" r="3" fill="#4a5568"/>
+      
+      <rect x="60" y="35" width="12" height="42" rx="2" fill="#3a4a5c" transform="rotate(-20 66 56)"/>
+      
+      <rect x="72" y="28" width="8" height="30" rx="2" fill="#4a6080" transform="rotate(-20 76 43)"/>
+      <rect x="84" y="24" width="8" height="30" rx="2" fill="#4a6080" transform="rotate(-20 88 39)"/>
+      <rect x="62" y="32" width="8" height="30" rx="2" fill="#4a6080" transform="rotate(-20 66 47)"/>
+      
+      <polygon points="78,22 83,22 80,14" fill="#ef4444" transform="rotate(-20 80 18)"/>
+      <polygon points="90,18 95,18 92,10" fill="#ef4444" transform="rotate(-20 92 14)"/>
+      <polygon points="68,26 73,26 70,18" fill="#ef4444" transform="rotate(-20 70 22)"/>
+      
+      <rect x="160" y="68" width="70" height="20" rx="3" fill="#2d3748"/>
+      <circle cx="195" cy="88" r="7" fill="#1a202c" stroke="#4a5568" stroke-width="1.5"/>
+      <circle cx="195" cy="88" r="3" fill="#4a5568"/>
+      <circle cx="220" cy="88" r="7" fill="#1a202c" stroke="#4a5568" stroke-width="1.5"/>
+      <circle cx="220" cy="88" r="3" fill="#4a5568"/>
+      
+      <rect x="193" y="40" width="4" height="28" fill="#4a5568"/>
+      <ellipse cx="195" cy="40" rx="22" ry="8" fill="none" stroke="#60a5fa" stroke-width="2"/>
+      <ellipse cx="195" cy="40" rx="22" ry="8" fill="rgba(59,130,246,0.08)"/>
+      
+      <line x1="195" y1="40" x2="217" y2="32" stroke="#60a5fa" stroke-width="1.5" opacity=".7"/>
+      
+      <text x="160" y="105" font-size="8" fill="#94a3b8" font-family="monospace">AN/TPY-2 Radar</text>
+      <text x="30" y="105" font-size="8" fill="#94a3b8" font-family="monospace">Launch Vehicle (×6/battery)</text>
+    </svg>`,
+
+    'PAC-3 MSE': `<svg viewBox="0 0 320 110" xmlns="http://www.w3.org/2000/svg">
+      <rect width="320" height="110" fill="${bg}"/>
+      <circle cx="30" cy="15" r="1" fill="white" opacity=".4"/><circle cx="80" cy="8" r="1" fill="white" opacity=".3"/>
+      <circle cx="200" cy="18" r="1" fill="white" opacity=".5"/><circle cx="260" cy="10" r="1" fill="white" opacity=".3"/>
+      <rect x="0" y="88" width="320" height="22" fill="${g}"/>
+      
+      <rect x="20" y="68" width="100" height="20" rx="3" fill="#2d3748"/>
+      
+      <circle cx="40" cy="90" r="7" fill="#1a202c" stroke="#4a5568" stroke-width="1.5"/>
+      <circle cx="40" cy="90" r="3" fill="#4a5568"/>
+      <circle cx="68" cy="90" r="7" fill="#1a202c" stroke="#4a5568" stroke-width="1.5"/>
+      <circle cx="68" cy="90" r="3" fill="#4a5568"/>
+      <circle cx="96" cy="90" r="7" fill="#1a202c" stroke="#4a5568" stroke-width="1.5"/>
+      <circle cx="96" cy="90" r="3" fill="#4a5568"/>
+      
+      <rect x="55" y="38" width="10" height="38" rx="2" fill="#3a4a5c" transform="rotate(-15 60 57)"/>
+      
+      <rect x="60" y="22" width="7" height="28" rx="2" fill="#4a6080" transform="rotate(-15 63 36)"/>
+      <rect x="70" y="18" width="7" height="28" rx="2" fill="#4a6080" transform="rotate(-15 73 32)"/>
+      <rect x="80" y="14" width="7" height="28" rx="2" fill="#4a6080" transform="rotate(-15 83 28)"/>
+      <rect x="50" y="26" width="7" height="28" rx="2" fill="#4a6080" transform="rotate(-15 53 40)"/>
+      
+      <polygon points="65,16 71,16 68,8" fill="#ef4444" transform="rotate(-15 68 12)"/>
+      <polygon points="75,12 81,12 78,4" fill="#ef4444" transform="rotate(-15 78 8)"/>
+      <polygon points="85,8 91,8 88,0" fill="#ef4444" transform="rotate(-15 88 4)"/>
+      <polygon points="55,20 61,20 58,12" fill="#ef4444" transform="rotate(-15 58 16)"/>
+      
+      <rect x="220" y="10" width="7" height="40" rx="3" fill="#4a6080"/>
+      <polygon points="218,10 229,10 223,2" fill="#ef4444"/>
+      <path d="M223 50 Q218 60 216 68 Q224 62 230 68 Q228 60 223 50" fill="${C.exhaust}" opacity=".8"/>
+      <ellipse cx="223" cy="70" rx="6" ry="3" fill="${C.exhaust}" opacity=".5"/>
+      <text x="210" y="80" font-size="7" fill="#f59e0b" font-family="monospace">Launch</text>
+      <text x="20" y="105" font-size="8" fill="#94a3b8" font-family="monospace">Patriot PAC-3 MSE · 16 rounds/launcher</text>
+    </svg>`,
+
+    'PAC-2 GEM-T': `<svg viewBox="0 0 320 110" xmlns="http://www.w3.org/2000/svg">
+      <rect width="320" height="110" fill="${bg}"/>
+      <rect x="0" y="88" width="320" height="22" fill="${g}"/>
+      <rect x="20" y="68" width="100" height="20" rx="3" fill="#2d3748"/>
+      <circle cx="40" cy="90" r="7" fill="#1a202c" stroke="#4a5568" stroke-width="1.5"/>
+      <circle cx="40" cy="90" r="3" fill="#4a5568"/>
+      <circle cx="68" cy="90" r="7" fill="#1a202c" stroke="#4a5568" stroke-width="1.5"/>
+      <circle cx="68" cy="90" r="3" fill="#4a5568"/>
+      <circle cx="96" cy="90" r="7" fill="#1a202c" stroke="#4a5568" stroke-width="1.5"/>
+      <circle cx="96" cy="90" r="3" fill="#4a5568"/>
+      <rect x="55" y="38" width="10" height="38" rx="2" fill="#3a4a5c" transform="rotate(-15 60 57)"/>
+      
+      <rect x="58" y="20" width="10" height="34" rx="2" fill="#3a5070" transform="rotate(-15 63 37)"/>
+      <rect x="72" y="14" width="10" height="34" rx="2" fill="#3a5070" transform="rotate(-15 77 31)"/>
+      <rect x="44" y="26" width="10" height="34" rx="2" fill="#3a5070" transform="rotate(-15 49 43)"/>
+      <rect x="86" y="8" width="10" height="34" rx="2" fill="#3a5070" transform="rotate(-15 91 25)"/>
+      <polygon points="63,14 71,14 67,5" fill="#f59e0b" transform="rotate(-15 67 10)"/>
+      <polygon points="77,8 85,8 81,-1" fill="#f59e0b" transform="rotate(-15 81 4)"/>
+      <polygon points="49,20 57,20 53,11" fill="#f59e0b" transform="rotate(-15 53 16)"/>
+      
+      <rect x="170" y="40" width="130" height="30" rx="4" fill="rgba(245,158,11,0.1)" stroke="rgba(245,158,11,0.3)" stroke-width="1"/>
+      <text x="178" y="52" font-size="8" fill="#f59e0b" font-family="monospace">Blast-fragmentation</text>
+      <text x="178" y="64" font-size="8" fill="#94a3b8" font-family="monospace">4 rounds / launcher</text>
+      <text x="20" y="105" font-size="8" fill="#94a3b8" font-family="monospace">Patriot PAC-2 GEM-T · confirmed active Qatar</text>
+    </svg>`,
+
+    'SM-3 IB/IIA': `<svg viewBox="0 0 320 110" xmlns="http://www.w3.org/2000/svg">
+      <rect width="320" height="110" fill="${bg}"/>
+      
+      <circle cx="20" cy="10" r="1" fill="white" opacity=".5"/><circle cx="80" cy="5" r="1" fill="white" opacity=".4"/>
+      <circle cx="160" cy="15" r="1" fill="white" opacity=".3"/><circle cx="280" cy="8" r="1" fill="white" opacity=".5"/>
+      <circle cx="240" cy="20" r="1" fill="white" opacity=".3"/>
+      
+      <path d="M0 85 Q40 80 80 85 Q120 90 160 85 Q200 80 240 85 Q280 90 320 85 L320 110 L0 110 Z" fill="#0a1f3c"/>
+      <path d="M0 82 Q40 78 80 82 Q120 86 160 82 Q200 78 240 82 Q280 86 320 82" fill="none" stroke="rgba(59,130,246,0.4)" stroke-width="1.5"/>
+      
+      <path d="M40 85 L40 65 L50 60 L70 58 L200 58 L220 60 L240 65 L240 85 Z" fill="#1e3a5f"/>
+      <rect x="100" y="40" width="60" height="20" rx="2" fill="#2d4a70"/>
+      <rect x="120" y="28" width="20" height="14" rx="1" fill="#3a5a80"/>
+      
+      <rect x="128" y="16" width="3" height="14" fill="#4a6a90"/>
+      <circle cx="129" cy="14" r="5" fill="none" stroke="#60a5fa" stroke-width="1.5"/>
+      
+      <rect x="80" y="55" width="8" height="6" rx="1" fill="#2a4060" stroke="#3a5080" stroke-width=".5"/>
+      <rect x="90" y="55" width="8" height="6" rx="1" fill="#2a4060" stroke="#3a5080" stroke-width=".5"/>
+      <rect x="100" y="55" width="8" height="6" rx="1" fill="#2a4060" stroke="#3a5080" stroke-width=".5"/>
+      
+      <rect x="270" y="8" width="8" height="50" rx="3" fill="#4a7090"/>
+      <polygon points="268,8 280,8 274,0" fill="${C.blue}"/>
+      <path d="M274 58 Q268 68 264 78 Q274 72 284 78 Q280 68 274 58" fill="${C.exhaust}" opacity=".9"/>
+      
+      <path d="M274 45 Q230 0 160 30" fill="none" stroke="rgba(96,165,250,0.4)" stroke-width="1" stroke-dasharray="4,3"/>
+      <text x="20" y="108" font-size="8" fill="#94a3b8" font-family="monospace">Aegis SM-3 · Mk 41 VLS · Exo-atmospheric intercept</text>
+    </svg>`,
+
+    "David's Sling": `<svg viewBox="0 0 320 110" xmlns="http://www.w3.org/2000/svg">
+      <rect width="320" height="110" fill="${bg}"/>
+      <circle cx="40" cy="12" r="1" fill="white" opacity=".4"/><circle cx="180" cy="7" r="1" fill="white" opacity=".3"/>
+      <circle cx="290" cy="18" r="1" fill="white" opacity=".4"/>
+      <rect x="0" y="88" width="320" height="22" fill="${g}"/>
+      
+      <rect x="25" y="68" width="110" height="20" rx="3" fill="#2d3748"/>
+      <circle cx="45" cy="90" r="7" fill="#1a202c" stroke="#4a5568" stroke-width="1.5"/>
+      <circle cx="45" cy="90" r="3" fill="#4a5568"/>
+      <circle cx="75" cy="90" r="7" fill="#1a202c" stroke="#4a5568" stroke-width="1.5"/>
+      <circle cx="75" cy="90" r="3" fill="#4a5568"/>
+      <circle cx="110" cy="90" r="7" fill="#1a202c" stroke="#4a5568" stroke-width="1.5"/>
+      <circle cx="110" cy="90" r="3" fill="#4a5568"/>
+      
+      <rect x="65" y="35" width="12" height="42" rx="2" fill="#3a4a5c" transform="rotate(-25 71 56)"/>
+      
+      <rect x="72" y="15" width="9" height="36" rx="4" fill="#506070" transform="rotate(-25 76 33)"/>
+      <rect x="85" y="9" width="9" height="36" rx="4" fill="#506070" transform="rotate(-25 89 27)"/>
+      <rect x="98" y="3" width="9" height="36" rx="4" fill="#506070" transform="rotate(-25 102 21)"/>
+      
+      <polygon points="76,50 80,56 82,50" fill="#3a5060" transform="rotate(-25 79 53)"/>
+      <polygon points="89,44 93,50 95,44" fill="#3a5060" transform="rotate(-25 92 47)"/>
+      
+      <circle cx="74" cy="11" r="3" fill="rgba(34,197,94,0.6)" transform="rotate(-25 74 11)"/>
+      <circle cx="87" cy="5" r="3" fill="rgba(34,197,94,0.6)" transform="rotate(-25 87 5)"/>
+      
+      <text x="200" y="55" font-size="26" fill="rgba(59,130,246,0.12)" font-family="sans-serif">✡</text>
+      <text x="25" y="105" font-size="8" fill="#94a3b8" font-family="monospace">David&apos;s Sling &quot;Stunner&quot; · Mach 7.5 · 300km</text>
+    </svg>`,
+
+    'Arrow 3': `<svg viewBox="0 0 320 110" xmlns="http://www.w3.org/2000/svg">
+      <rect width="320" height="110" fill="${bg}"/>
+      
+      <circle cx="20" cy="8" r="1" fill="white" opacity=".6"/><circle cx="60" cy="3" r="1.2" fill="white" opacity=".5"/>
+      <circle cx="120" cy="12" r="1" fill="white" opacity=".4"/><circle cx="200" cy="5" r="1" fill="white" opacity=".6"/>
+      <circle cx="260" cy="14" r="1.2" fill="white" opacity=".4"/><circle cx="310" cy="7" r="1" fill="white" opacity=".5"/>
+      
+      <path d="M0 85 Q80 75 160 80 Q240 75 320 85 L320 110 L0 110Z" fill="rgba(20,60,120,0.6)"/>
+      <path d="M0 82 Q80 72 160 77 Q240 72 320 82" fill="none" stroke="rgba(100,160,255,0.3)" stroke-width="1"/>
+      
+      
+      <rect x="240" y="5" width="7" height="35" rx="3" fill="#f97316"/>
+      <polygon points="238,5 249,5 243,-3" fill="#dc2626"/>
+      <path d="M243 40 Q248 50 243 58 Q238 50 243 40" fill="rgba(251,191,36,0.6)"/>
+      
+      <rect x="140" y="20" width="6" height="42" rx="3" fill="#60a5fa"/>
+      <polygon points="138,20 148,20 143,11" fill="white"/>
+      <rect x="138" y="34" width="3" height="10" fill="rgba(96,165,250,0.5)"/>
+      <rect x="147" y="34" width="3" height="10" fill="rgba(96,165,250,0.5)"/>
+      
+      <circle cx="195" cy="28" r="12" fill="rgba(251,191,36,0.15)" stroke="rgba(251,191,36,0.5)" stroke-width="1.5"/>
+      <circle cx="195" cy="28" r="6" fill="rgba(251,191,36,0.4)"/>
+      <text x="182" y="32" font-size="8" fill="white" font-family="monospace" font-weight="bold">HIT</text>
+      
+      <line x1="243" y1="5" x2="195" y2="28" stroke="rgba(239,68,68,0.4)" stroke-width="1.5" stroke-dasharray="3,2"/>
+      <line x1="143" y1="62" x2="195" y2="28" stroke="rgba(96,165,250,0.4)" stroke-width="1.5" stroke-dasharray="3,2"/>
+      <text x="20" y="108" font-size="8" fill="#94a3b8" font-family="monospace">Arrow 3 · Exo-atmospheric · Hit-to-kill · Mach 9</text>
+    </svg>`,
+
+    'Arrow 2': `<svg viewBox="0 0 320 110" xmlns="http://www.w3.org/2000/svg">
+      <rect width="320" height="110" fill="${bg}"/>
+      <circle cx="30" cy="10" r="1" fill="white" opacity=".4"/><circle cx="200" cy="6" r="1" fill="white" opacity=".4"/>
+      <rect x="0" y="82" width="320" height="28" fill="${g}"/>
+      
+      <rect x="0" y="0" width="320" height="82" fill="url(#atm)"/>
+      <defs><linearGradient id="atm" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="${bg}"/><stop offset="100%" stop-color="rgba(0,40,80,0.6)"/></linearGradient></defs>
+      
+      <rect x="20" y="68" width="80" height="16" rx="2" fill="#2d3748"/>
+      <circle cx="38" cy="86" r="6" fill="#1a202c" stroke="#4a5568" stroke-width="1.5"/>
+      <circle cx="38" cy="86" r="2.5" fill="#4a5568"/>
+      <circle cx="62" cy="86" r="6" fill="#1a202c" stroke="#4a5568" stroke-width="1.5"/>
+      <circle cx="62" cy="86" r="2.5" fill="#4a5568"/>
+      <circle cx="86" cy="86" r="6" fill="#1a202c" stroke="#4a5568" stroke-width="1.5"/>
+      <circle cx="86" cy="86" r="2.5" fill="#4a5568"/>
+      
+      <rect x="54" y="18" width="8" height="55" rx="3" fill="#4a7090"/>
+      <polygon points="52,18 64,18 58,8" fill="${C.blue}"/>
+      
+      <polygon points="52,62 46,72 52,72" fill="#3a5060"/>
+      <polygon points="64,62 70,72 64,72" fill="#3a5060"/>
+      <path d="M58 73 Q52 83 48 90 Q58 85 68 90 Q64 83 58 73" fill="${C.exhaust}" opacity=".9"/>
+      
+      <rect x="220" y="15" width="7" height="30" rx="2" fill="#ef4444"/>
+      <polygon points="218,15 229,15 223,6" fill="#dc2626"/>
+      
+      <circle cx="160" cy="35" r="8" fill="rgba(34,197,94,0.2)" stroke="${C.green}" stroke-width="1.5"/>
+      <text x="25" y="108" font-size="8" fill="#94a3b8" font-family="monospace">Arrow 2 · Endo-atmospheric terminal phase</text>
+    </svg>`,
+
+    'Iron Dome (Tamir)': `<svg viewBox="0 0 320 110" xmlns="http://www.w3.org/2000/svg">
+      <rect width="320" height="110" fill="${bg}"/>
+      <rect x="0" y="88" width="320" height="22" fill="${g}"/>
+      
+      <rect x="230" y="15" width="5" height="18" rx="2" fill="${C.amber}" opacity=".8"/>
+      <polygon points="229,15 236,15 232,8" fill="#ef4444" opacity=".8"/>
+      <rect x="250" y="8" width="5" height="18" rx="2" fill="${C.amber}" opacity=".7"/>
+      <polygon points="249,8 256,8 252,1" fill="#ef4444" opacity=".7"/>
+      <rect x="270" y="20" width="5" height="18" rx="2" fill="${C.amber}" opacity=".8"/>
+      <polygon points="269,20 276,20 272,13" fill="#ef4444" opacity=".8"/>
+      <rect x="290" y="10" width="5" height="18" rx="2" fill="${C.amber}" opacity=".6"/>
+      
+      
+      <rect x="20" y="68" width="50" height="20" rx="2" fill="#2d3748"/>
+      <rect x="43" y="50" width="4" height="20" fill="#4a5568"/>
+      <ellipse cx="45" cy="50" rx="18" ry="6" fill="none" stroke="#60a5fa" stroke-width="1.5"/>
+      <ellipse cx="45" cy="50" rx="18" ry="6" fill="rgba(59,130,246,0.07)"/>
+      
+      <rect x="100" y="62" width="70" height="26" rx="3" fill="#2d3748"/>
+      <circle cx="120" cy="90" r="7" fill="#1a202c" stroke="#4a5568" stroke-width="1.5"/>
+      <circle cx="120" cy="90" r="3" fill="#4a5568"/>
+      <circle cx="155" cy="90" r="7" fill="#1a202c" stroke="#4a5568" stroke-width="1.5"/>
+      <circle cx="155" cy="90" r="3" fill="#4a5568"/>
+      
+      <rect x="108" y="30" width="7" height="34" rx="2" fill="#4a7090"/>
+      <rect x="118" y="30" width="7" height="34" rx="2" fill="#4a7090"/>
+      <rect x="128" y="30" width="7" height="34" rx="2" fill="#4a7090"/>
+      <rect x="138" y="30" width="7" height="34" rx="2" fill="#4a7090"/>
+      <rect x="148" y="30" width="7" height="34" rx="2" fill="#4a7090"/>
+      
+      <circle cx="200" cy="25" r="5" fill="rgba(251,191,36,0.4)" stroke="#fbbf24" stroke-width="1"/>
+      <line x1="200" y1="20" x2="197" y2="16" stroke="#fbbf24" stroke-width="1"/>
+      <line x1="200" y1="20" x2="204" y2="16" stroke="#fbbf24" stroke-width="1"/>
+      <circle cx="255" cy="18" r="4" fill="rgba(34,197,94,0.4)" stroke="${C.green}" stroke-width="1"/>
+      <text x="20" y="108" font-size="8" fill="#94a3b8" font-family="monospace">Iron Dome · Tamir · 20 rounds/battery · NOT vs. BMs</text>
+    </svg>`,
+
+    'Iron Beam': `<svg viewBox="0 0 320 110" xmlns="http://www.w3.org/2000/svg">
+      <rect width="320" height="110" fill="${bg}"/>
+      <rect x="0" y="88" width="320" height="22" fill="${g}"/>
+      
+      <rect x="20" y="58" width="100" height="32" rx="4" fill="#1e2a3a"/>
+      <rect x="25" y="62" width="90" height="10" rx="2" fill="#2d3a4a"/>
+      <circle cx="68" cy="58" r="10" fill="#1a2535" stroke="#3a4a60" stroke-width="2"/>
+      <circle cx="68" cy="58" r="6" fill="rgba(96,165,250,0.15)"/>
+      <circle cx="68" cy="58" r="3" fill="#60a5fa" opacity=".8"/>
+      
+      <defs>
+        <linearGradient id="laserGrad" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#60a5fa" stop-opacity="0.9"/>
+          <stop offset="70%" stop-color="#a78bfa" stop-opacity="0.6"/>
+          <stop offset="100%" stop-color="white" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+      <line x1="78" y1="52" x2="280" y2="20" stroke="url(#laserGrad)" stroke-width="3"/>
+      <line x1="78" y1="54" x2="280" y2="22" stroke="rgba(167,139,250,0.3)" stroke-width="5"/>
+      
+      <rect x="265" y="12" width="20" height="10" rx="2" fill="#f97316" opacity=".7"/>
+      <circle cx="255" cy="22" r="8" fill="rgba(251,191,36,0.3)" stroke="#fbbf24" stroke-width="1.5"/>
+      <line x1="250" y1="15" x2="245" y2="10" stroke="#fbbf24" stroke-width="1"/><line x1="255" y1="12" x2="253" y2="6" stroke="#fbbf24" stroke-width="1"/>
+      <line x1="262" y1="14" x2="265" y2="8" stroke="#fbbf24" stroke-width="1"/>
+      
+      <rect x="160" y="60" width="120" height="22" rx="4" fill="rgba(34,197,94,0.1)" stroke="rgba(34,197,94,0.3)" stroke-width="1"/>
+      <text x="168" y="72" font-size="8" fill="#22c55e" font-family="monospace">~$3–5 per kill</text>
+      <text x="168" y="80" font-size="8" fill="#94a3b8" font-family="monospace">vs. $50k Iron Dome</text>
+      <text x="20" y="108" font-size="8" fill="#94a3b8" font-family="monospace">Iron Beam · Directed energy · Speed of light</text>
+    </svg>`,
+
+    'Pantsir-S1': `<svg viewBox="0 0 320 110" xmlns="http://www.w3.org/2000/svg">
+      <rect width="320" height="110" fill="${bg}"/>
+      <rect x="0" y="88" width="320" height="22" fill="${g}"/>
+      
+      <rect x="30" y="65" width="130" height="26" rx="3" fill="#2d3728"/>
+      
+      <rect x="28" y="84" width="134" height="10" rx="2" fill="#1a2218"/>
+      <circle cx="45" cy="89" r="5" fill="#0f1a0f" stroke="#2d3728" stroke-width="1"/>
+      <circle cx="65" cy="89" r="5" fill="#0f1a0f" stroke="#2d3728" stroke-width="1"/>
+      <circle cx="85" cy="89" r="5" fill="#0f1a0f" stroke="#2d3728" stroke-width="1"/>
+      <circle cx="105" cy="89" r="5" fill="#0f1a0f" stroke="#2d3728" stroke-width="1"/>
+      <circle cx="145" cy="89" r="5" fill="#0f1a0f" stroke="#2d3728" stroke-width="1"/>
+      
+      <rect x="60" y="50" width="70" height="18" rx="3" fill="#3a4a38"/>
+      
+      <rect x="50" y="54" width="3" height="22" rx="1" fill="#5a6a58"/>
+      <rect x="44" y="54" width="3" height="22" rx="1" fill="#5a6a58"/>
+      <rect x="143" y="54" width="3" height="22" rx="1" fill="#5a6a58"/>
+      <rect x="149" y="54" width="3" height="22" rx="1" fill="#5a6a58"/>
+      
+      <rect x="68" y="34" width="6" height="20" rx="2" fill="#4a6050"/>
+      <rect x="78" y="34" width="6" height="20" rx="2" fill="#4a6050"/>
+      <rect x="88" y="34" width="6" height="20" rx="2" fill="#4a6050"/>
+      <rect x="108" y="34" width="6" height="20" rx="2" fill="#4a6050"/>
+      <rect x="118" y="34" width="6" height="20" rx="2" fill="#4a6050"/>
+      <rect x="128" y="34" width="6" height="20" rx="2" fill="#4a6050"/>
+      
+      <rect x="93" y="22" width="4" height="14" fill="#4a5568"/>
+      <ellipse cx="95" cy="22" rx="14" ry="5" fill="none" stroke="#60a5fa" stroke-width="1.5"/>
+      
+      <path d="M42 52 L38 46 L44 50 Z" fill="${C.exhaust}" opacity=".8"/>
+      <text x="30" y="108" font-size="8" fill="#94a3b8" font-family="monospace">Pantsir-S1 · 30mm cannon + SAM · UAE confirmed</text>
+    </svg>`,
+
+    'Cheongung II (KM-SAM)': `<svg viewBox="0 0 320 110" xmlns="http://www.w3.org/2000/svg">
+      <rect width="320" height="110" fill="${bg}"/>
+      <rect x="0" y="88" width="320" height="22" fill="${g}"/>
+      <rect x="20" y="68" width="110" height="20" rx="3" fill="#2a3545"/>
+      <circle cx="42" cy="90" r="7" fill="#1a202c" stroke="#4a5568" stroke-width="1.5"/>
+      <circle cx="42" cy="90" r="3" fill="#4a5568"/>
+      <circle cx="70" cy="90" r="7" fill="#1a202c" stroke="#4a5568" stroke-width="1.5"/>
+      <circle cx="70" cy="90" r="3" fill="#4a5568"/>
+      <circle cx="100" cy="90" r="7" fill="#1a202c" stroke="#4a5568" stroke-width="1.5"/>
+      <circle cx="100" cy="90" r="3" fill="#4a5568"/>
+      
+      <rect x="58" y="35" width="12" height="42" rx="2" fill="#35455a" transform="rotate(-20 64 56)"/>
+      
+      <rect x="64" y="18" width="7" height="30" rx="2" fill="#3a5575" transform="rotate(-20 67 33)"/>
+      <rect x="75" y="12" width="7" height="30" rx="2" fill="#3a5575" transform="rotate(-20 78 27)"/>
+      <rect x="86" y="6" width="7" height="30" rx="2" fill="#3a5575" transform="rotate(-20 89 21)"/>
+      <rect x="53" y="24" width="7" height="30" rx="2" fill="#3a5575" transform="rotate(-20 56 39)"/>
+      
+      <rect x="170" y="30" width="130" height="40" rx="4" fill="rgba(59,130,246,0.08)" stroke="rgba(59,130,246,0.25)" stroke-width="1"/>
+      <text x="178" y="46" font-size="8" fill="${C.blue}" font-family="monospace">Korean supply chain</text>
+      <text x="178" y="58" font-size="8" fill="#94a3b8" font-family="monospace">Independent of</text>
+      <text x="178" y="66" font-size="8" fill="#94a3b8" font-family="monospace">US/Lockheed</text>
+      <text x="20" y="108" font-size="8" fill="#94a3b8" font-family="monospace">Cheongung II · KM-SAM · First combat use: UAE Mar 2026</text>
+    </svg>`,
+
+    'NASAMS': `<svg viewBox="0 0 320 110" xmlns="http://www.w3.org/2000/svg">
+      <rect width="320" height="110" fill="${bg}"/>
+      <rect x="0" y="88" width="320" height="22" fill="${g}"/>
+      
+      <rect x="20" y="65" width="110" height="25" rx="3" fill="#2a3545"/>
+      <circle cx="40" cy="92" r="7" fill="#1a202c" stroke="#4a5568" stroke-width="1.5"/>
+      <circle cx="40" cy="92" r="3" fill="#4a5568"/>
+      <circle cx="68" cy="92" r="7" fill="#1a202c" stroke="#4a5568" stroke-width="1.5"/>
+      <circle cx="68" cy="92" r="3" fill="#4a5568"/>
+      <circle cx="105" cy="92" r="7" fill="#1a202c" stroke="#4a5568" stroke-width="1.5"/>
+      <circle cx="105" cy="92" r="3" fill="#4a5568"/>
+      
+      <rect x="28" y="40" width="100" height="14" rx="2" fill="#3a4a5c"/>
+      <rect x="30" y="42" width="14" height="10" rx="1" fill="#4a6080"/><line x1="44" y1="42" x2="44" y2="52" stroke="#2a3545" stroke-width="1"/>
+      <rect x="45" y="42" width="14" height="10" rx="1" fill="#4a6080"/><line x1="59" y1="42" x2="59" y2="52" stroke="#2a3545" stroke-width="1"/>
+      <rect x="60" y="42" width="14" height="10" rx="1" fill="#4a6080"/><line x1="74" y1="42" x2="74" y2="52" stroke="#2a3545" stroke-width="1"/>
+      <rect x="75" y="42" width="14" height="10" rx="1" fill="#4a6080"/><line x1="89" y1="42" x2="89" y2="52" stroke="#2a3545" stroke-width="1"/>
+      <rect x="90" y="42" width="14" height="10" rx="1" fill="#4a6080"/><line x1="104" y1="42" x2="104" y2="52" stroke="#2a3545" stroke-width="1"/>
+      <rect x="105" y="42" width="14" height="10" rx="1" fill="#4a6080"/>
+      
+      <rect x="170" y="42" width="128" height="22" rx="4" fill="rgba(239,68,68,0.09)" stroke="rgba(239,68,68,0.3)" stroke-width="1"/>
+      <text x="178" y="54" font-size="8" fill="#ef4444" font-family="monospace">CANNOT intercept BMs</text>
+      <text x="178" y="63" font-size="8" fill="#94a3b8" font-family="monospace">AIM-120 · cruise · drones</text>
+      <text x="20" y="108" font-size="8" fill="#94a3b8" font-family="monospace">NASAMS · Norway/US · Qatar operator</text>
+    </svg>`,
+
+    'Aster 30 Block 1': `<svg viewBox="0 0 320 110" xmlns="http://www.w3.org/2000/svg">
+      <rect width="320" height="110" fill="${bg}"/>
+      
+      <path d="M0 75 Q40 70 80 75 Q120 80 160 75 Q200 70 240 75 Q280 80 320 75 L320 110 L0 110 Z" fill="#0a1f3c"/>
+      <path d="M0 72 Q80 67 160 72 Q240 67 320 72" fill="none" stroke="rgba(59,130,246,0.3)" stroke-width="1"/>
+      
+      <path d="M30 75 L30 60 L40 55 L50 52 L220 52 L240 55 L255 60 L255 75Z" fill="#1e3550"/>
+      <rect x="90" y="38" width="80" height="16" rx="2" fill="#2a4570"/>
+      
+      <rect x="55" y="48" width="8" height="6" rx="1" fill="#1e3040" stroke="#2a4060" stroke-width=".5"/>
+      <rect x="65" y="48" width="8" height="6" rx="1" fill="#1e3040" stroke="#2a4060" stroke-width=".5"/>
+      <rect x="75" y="48" width="8" height="6" rx="1" fill="#1e3040" stroke="#2a4060" stroke-width=".5"/>
+      <rect x="85" y="48" width="8" height="6" rx="1" fill="#1e3040" stroke="#2a4060" stroke-width=".5"/>
+      
+      <circle cx="225" cy="54" r="8" fill="#2a4060" stroke="#3a5070" stroke-width="1"/>
+      <circle cx="225" cy="54" r="4" fill="#1a3050"/>
+      
+      <rect x="128" y="28" width="3" height="12" fill="#4a6080"/>
+      <circle cx="129" cy="26" r="7" fill="none" stroke="#60a5fa" stroke-width="1.5"/>
+      
+      <rect x="60" y="12" width="6" height="38" rx="3" fill="#5070a0"/>
+      <polygon points="58,12 68,12 63,3" fill="white"/>
+      <path d="M63 50 Q57 60 53 70 Q63 65 73 70 Q69 60 63 50" fill="${C.exhaust}" opacity=".8"/>
+      <text x="20" y="108" font-size="8" fill="#94a3b8" font-family="monospace">Aster 30 · Al Zubarah corvettes · 16 cells each</text>
+    </svg>`,
+
+    'F-16E/F Block 60 + Mirage 2000-9': `<svg viewBox="0 0 320 110" xmlns="http://www.w3.org/2000/svg">
+      <rect width="320" height="110" fill="${bg}"/>
+      <circle cx="40" cy="12" r="1" fill="white" opacity=".4"/><circle cx="200" cy="8" r="1" fill="white" opacity=".3"/>
+      <circle cx="280" cy="16" r="1" fill="white" opacity=".4"/>
+      
+      <ellipse cx="60" cy="80" rx="40" ry="12" fill="rgba(255,255,255,0.04)"/>
+      <ellipse cx="240" cy="90" rx="50" ry="10" fill="rgba(255,255,255,0.03)"/>
+      
+      <path d="M40 50 L180 50 L195 58 L185 65 L40 65 L30 58 Z" fill="#8a9080"/>
+      
+      <ellipse cx="75" cy="50" rx="18" ry="8" fill="rgba(100,180,255,0.25)" stroke="rgba(100,180,255,0.4)" stroke-width="1"/>
+      
+      <path d="M80 65 L120 90 L160 65" fill="#7a8070" stroke="#6a7060" stroke-width=".5"/>
+      
+      <path d="M170 50 L185 30 L190 50" fill="#8a9080"/>
+      
+      <rect x="95" y="70" width="22" height="4" rx="1" fill="#d97706"/>
+      <polygon points="93,72 95,68 95,76" fill="#b45309"/>
+      
+      <ellipse cx="42" cy="57" rx="8" ry="6" fill="rgba(251,191,36,0.7)"/>
+      <ellipse cx="42" cy="57" rx="4" ry="3" fill="white" opacity=".6"/>
+      <text x="20" y="108" font-size="8" fill="#94a3b8" font-family="monospace">F-16E Block 60 · UAE primary drone layer · AIM-9/MICA</text>
+    </svg>`,
+
+    'F-15QA + Rafale + Typhoon': `<svg viewBox="0 0 320 110" xmlns="http://www.w3.org/2000/svg">
+      <rect width="320" height="110" fill="${bg}"/>
+      <circle cx="50" cy="10" r="1" fill="white" opacity=".4"/><circle cx="220" cy="6" r="1" fill="white" opacity=".3"/>
+      
+      <path d="M100 55 L160 42 L220 55 L195 70 L160 72 L125 70 Z" fill="#6a7585"/>
+      <path d="M100 55 L80 40 L160 42 Z" fill="#5a6575"/>
+      <path d="M220 55 L240 40 L160 42 Z" fill="#5a6575"/>
+      
+      <path d="M120 48 L105 38 L135 48" fill="#7a8595"/>
+      <path d="M200 48 L215 38 L185 48" fill="#7a8595"/>
+      
+      <ellipse cx="152" cy="71" rx="6" ry="5" fill="rgba(251,191,36,0.6)"/>
+      <ellipse cx="168" cy="71" rx="6" ry="5" fill="rgba(251,191,36,0.6)"/>
+      
+      <rect x="90" y="58" width="18" height="4" rx="1" fill="#60a5fa"/>
+      <rect x="212" y="58" width="18" height="4" rx="1" fill="#60a5fa"/>
+      
+      <path d="M255 35 L290 30 L305 35 L290 40 Z" fill="#f97316" opacity=".7"/>
+      <path d="M255 35 L248 25 L275 32 Z" fill="#ea580c" opacity=".6"/>
+      
+      <line x1="268" y1="28" x2="278" y2="38" stroke="#ef4444" stroke-width="2"/>
+      <line x1="278" y1="28" x2="268" y2="38" stroke="#ef4444" stroke-width="2"/>
+      <text x="20" y="108" font-size="8" fill="#94a3b8" font-family="monospace">Rafale · F-15QA · Typhoon · Qatar downed 2× Su-24</text>
+    </svg>`,
+
+    'F-35I / F-16I / F-15I': `<svg viewBox="0 0 320 110" xmlns="http://www.w3.org/2000/svg">
+      <rect width="320" height="110" fill="${bg}"/>
+      <circle cx="30" cy="8" r="1" fill="white" opacity=".5"/><circle cx="160" cy="5" r="1" fill="white" opacity=".4"/>
+      <circle cx="290" cy="12" r="1" fill="white" opacity=".3"/>
+      
+      <path d="M160 35 L220 55 L200 72 L160 76 L120 72 L100 55 Z" fill="#4a5568"/>
+      
+      <path d="M160 35 L220 55 L200 55 Z" fill="#3a4558" opacity=".6"/>
+      <path d="M160 35 L100 55 L120 55 Z" fill="#3a4558" opacity=".6"/>
+      
+      <ellipse cx="160" cy="75" rx="10" ry="6" fill="rgba(251,191,36,0.5)"/>
+      
+      <path d="M160 35 L220 55 L200 72 L160 76 L120 72 L100 55 Z" fill="none" stroke="rgba(96,165,250,0.2)" stroke-width="1"/>
+      
+      <rect x="145" y="52" width="30" height="5" rx="1" fill="rgba(239,68,68,0.2)" stroke="rgba(239,68,68,0.4)" stroke-width=".5" stroke-dasharray="2,1"/>
+      
+      <text x="148" y="68" font-size="12" fill="rgba(59,130,246,0.15)" font-family="sans-serif">✡</text>
+      <text x="20" y="108" font-size="8" fill="#94a3b8" font-family="monospace">F-35I Adir · 48 aircraft · Stealth · Modified AIM-9M seeker</text>
+    </svg>`,
+
+    'AH-64D/E Apache + helicopter gunships': `<svg viewBox="0 0 320 110" xmlns="http://www.w3.org/2000/svg">
+      <rect width="320" height="110" fill="${bg}"/>
+      
+      <circle cx="50" cy="15" r="1" fill="white" opacity=".5"/><circle cx="150" cy="8" r="1" fill="white" opacity=".3"/>
+      <rect x="250" y="60" width="25" height="40" rx="2" fill="rgba(255,255,255,0.05)"/>
+      <rect x="280" y="70" width="20" height="30" rx="2" fill="rgba(255,255,255,0.04)"/>
+      
+      <ellipse cx="130" cy="58" rx="50" ry="16" fill="#2d3a28"/>
+      
+      <rect x="175" y="55" width="70" height="8" rx="3" fill="#2d3a28"/>
+      
+      <line x1="242" y1="44" x2="242" y2="72" stroke="#4a5548" stroke-width="2"/>
+      <line x1="235" y1="51" x2="249" y2="64" stroke="#4a5548" stroke-width="1.5"/>
+      
+      <line x1="50" y1="42" x2="210" y2="42" stroke="#3a4a38" stroke-width="3"/>
+      <line x1="85" y1="15" x2="175" y2="69" stroke="#3a4a38" stroke-width="3"/>
+      
+      <path d="M88 50 Q100 38 120 38 Q140 38 152 50 L152 65 L88 65 Z" fill="rgba(100,180,255,0.15)" stroke="rgba(100,180,255,0.3)" stroke-width="1"/>
+      
+      <rect x="96" y="70" width="28" height="5" rx="1" fill="#4a5548"/>
+      <rect x="70" y="66" width="3" height="12" rx="1" fill="#5a6558"/>
+      
+      <path d="M240 30 L265 22 L270 30 L265 38 Z" fill="${C.amber}" opacity=".7"/>
+      <circle cx="253" cy="30" r="8" fill="rgba(251,191,36,0.3)" stroke="${C.amber}" stroke-width="1"/>
+      
+      <line x1="72" y1="65" x2="248" y2="28" stroke="rgba(251,191,36,0.5)" stroke-width="1.5" stroke-dasharray="3,2"/>
+      <text x="20" y="108" font-size="8" fill="#94a3b8" font-family="monospace">AH-64D Apache · M134 minigun · Shahed intercept confirmed</text>
+    </svg>`,
+
+    'Naval RAM + 30mm Marlin': `<svg viewBox="0 0 320 110" xmlns="http://www.w3.org/2000/svg">
+      <rect width="320" height="110" fill="${bg}"/>
+      <path d="M0 78 Q40 73 80 78 Q120 83 160 78 Q200 73 240 78 Q280 83 320 78 L320 110 L0 110 Z" fill="#0a1f3c"/>
+      
+      <path d="M20 78 L20 58 L35 52 L50 48 L240 48 L258 52 L270 58 L270 78Z" fill="#1e3550"/>
+      <rect x="80" y="34" width="90" height="16" rx="2" fill="#2a4570"/>
+      
+      <circle cx="238" cy="50" r="14" fill="#253a5a" stroke="#3a5070" stroke-width="1.5"/>
+      <circle cx="238" cy="50" r="8" fill="#1e3040"/>
+      
+      <rect x="234" y="26" width="4" height="22" rx="2" fill="#5070a0"/>
+      <polygon points="232,26 240,26 236,18" fill="white"/>
+      <path d="M236 48 Q232 55 230 62 Q236 58 242 62 Q240 55 236 48" fill="${C.exhaust}" opacity=".7"/>
+      
+      <rect x="55" y="42" width="16" height="10" rx="2" fill="#2a4060"/>
+      <rect x="50" y="45" width="3" height="8" rx="1" fill="#4a6080"/>
+      <rect x="68" y="45" width="3" height="8" rx="1" fill="#4a6080"/>
+      
+      <rect x="88" y="44" width="7" height="6" rx="1" fill="#1e3040" stroke="#2a4060" stroke-width=".5"/>
+      <rect x="98" y="44" width="7" height="6" rx="1" fill="#1e3040" stroke="#2a4060" stroke-width=".5"/>
+      <rect x="108" y="44" width="7" height="6" rx="1" fill="#1e3040" stroke="#2a4060" stroke-width=".5"/>
+      
+      <path d="M165 22 L185 16 L188 24 L185 32Z" fill="${C.amber}" opacity=".7"/>
+      
+      <circle cx="200" cy="24" r="6" fill="rgba(34,197,94,0.3)" stroke="${C.green}" stroke-width="1"/>
+      <text x="20" y="108" font-size="8" fill="#94a3b8" font-family="monospace">RAM RIM-116 + 30mm Marlin · Qatar Navy confirmed Mar 2</text>
+    </svg>`,
+
+    'Silent Hunter': `<svg viewBox="0 0 320 110" xmlns="http://www.w3.org/2000/svg">
+      <rect width="320" height="110" fill="${bg}"/>
+      <rect x="0" y="88" width="320" height="22" fill="${g}"/>
+      
+      <rect x="30" y="65" width="100" height="26" rx="3" fill="#2d3728"/>
+      <circle cx="50" cy="93" r="6" fill="#1a2218" stroke="#2d3728" stroke-width="1.5"/>
+      <circle cx="50" cy="93" r="2.5" fill="#4a5548"/>
+      <circle cx="80" cy="93" r="6" fill="#1a2218" stroke="#2d3728" stroke-width="1.5"/>
+      <circle cx="80" cy="93" r="2.5" fill="#4a5548"/>
+      <circle cx="110" cy="93" r="6" fill="#1a2218" stroke="#2d3728" stroke-width="1.5"/>
+      <circle cx="110" cy="93" r="2.5" fill="#4a5548"/>
+      
+      <rect x="55" y="50" width="50" height="18" rx="3" fill="#1e2a3a"/>
+      <circle cx="80" cy="52" r="10" fill="#1a2535" stroke="#3a4a60" stroke-width="2"/>
+      <circle cx="80" cy="52" r="6" fill="rgba(96,165,250,0.15)"/>
+      <circle cx="80" cy="52" r="3" fill="#60a5fa"/>
+      
+      <rect x="220" y="40" width="60" height="40" rx="3" fill="rgba(220,38,38,0.1)" stroke="rgba(220,38,38,0.2)" stroke-width="1"/>
+      <text x="232" y="58" font-size="14" fill="rgba(220,38,38,0.25)">🇨🇳</text>
+      
+      <line x1="90" y1="48" x2="280" y2="22" stroke="rgba(96,165,250,0.5)" stroke-width="2"/>
+      
+      <rect x="155" y="68" width="110" height="16" rx="3" fill="rgba(245,158,11,0.12)" stroke="rgba(245,158,11,0.35)" stroke-width="1"/>
+      <text x="163" y="80" font-size="8" fill="#f59e0b" font-family="monospace">⚠ NOT CONFIRMED IN CONFLICT</text>
+      <text x="30" y="108" font-size="8" fill="#94a3b8" font-family="monospace">Silent Hunter · CASIC · Saudi capability only</text>
+    </svg>`,
+
+    'Skynight': `<svg viewBox="0 0 320 110" xmlns="http://www.w3.org/2000/svg">
+      <rect width="320" height="110" fill="${bg}"/>
+      <rect x="0" y="88" width="320" height="22" fill="${g}"/>
+      
+      <rect x="30" y="65" width="90" height="25" rx="3" fill="#2a3545"/>
+      <circle cx="50" cy="92" r="7" fill="#1a202c" stroke="#4a5568" stroke-width="1.5"/>
+      <circle cx="50" cy="92" r="3" fill="#4a5568"/>
+      <circle cx="78" cy="92" r="7" fill="#1a202c" stroke="#4a5568" stroke-width="1.5"/>
+      <circle cx="78" cy="92" r="3" fill="#4a5568"/>
+      <circle cx="105" cy="92" r="7" fill="#1a202c" stroke="#4a5568" stroke-width="1.5"/>
+      <circle cx="105" cy="92" r="3" fill="#4a5568"/>
+      
+      <rect x="48" y="48" width="54" height="20" rx="3" fill="#1e2a3a"/>
+      
+      <rect x="72" y="30" width="3" height="20" fill="#4a5568"/>
+      <ellipse cx="73" cy="30" rx="12" ry="4" fill="none" stroke="#60a5fa" stroke-width="1.5"/>
+      
+      <rect x="52" y="38" width="6" height="14" rx="1" fill="#3a5070"/>
+      <rect x="61" y="38" width="6" height="14" rx="1" fill="#3a5070"/>
+      <rect x="83" y="38" width="6" height="14" rx="1" fill="#3a5070"/>
+      <rect x="92" y="38" width="6" height="14" rx="1" fill="#3a5070"/>
+      
+      <rect x="200" y="50" width="80" height="30" rx="3" fill="rgba(0,115,47,0.08)" stroke="rgba(0,115,47,0.2)" stroke-width="1"/>
+      <text x="213" y="68" font-size="11" fill="rgba(0,115,47,0.3)">🇦🇪</text>
+      <text x="30" y="108" font-size="8" fill="#94a3b8" font-family="monospace">Skynight · UAE domestic · ~40% drone absorption</text>
+    </svg>`,
+
+  };
+
+  const svg = svgs[nm];
+  if (!svg) return `<div class="sc-no-img"><span class="sc-no-img-icon">🛡</span></div>`;
+  return `<div class="sc-img-wrap">${svg}</div>`;
+}
+
+
+function filterSys(btn) {
+  document.querySelectorAll('.sf-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const country = btn.dataset.country;
+  document.querySelectorAll('.sc').forEach(card => {
+    if (country === 'all') {
+      card.classList.remove('sys-card-hidden');
+    } else {
+      const ops = card.dataset.ops || '';
+      card.classList.toggle('sys-card-hidden', !ops.includes(country));
+    }
+  });
+  // Hide empty sections
+  document.querySelectorAll('.sys-section').forEach(sec => {
+    const visible = sec.querySelectorAll('.sc:not(.sys-card-hidden)').length > 0;
+    sec.classList.toggle('sys-section-empty', !visible);
+  });
+}
+
+function buildSysGuide(){
+  const el=document.getElementById('sys-content');
+  if(el.dataset.built) return;
+  el.dataset.built='1';
+  const tm={BM:'tc-bm',CM:'tc-cm',Drone:'tc-drone',UAV:'tc-uav',Acft:'tc-acft'};
+  const tl={BM:'Ballistic',CM:'Cruise',Drone:'Shahed',UAV:'UAV',Acft:'Aircraft'};
+  const scol={critical:'var(--red)',strained:'var(--amber)',adequate:'var(--green)'};
+  const slbl={critical:'CRITICAL',strained:'STRAINED',adequate:'ADEQUATE'};
+  let html='';
+  Object.entries(SYSDATA).forEach(([sec,syss])=>{
+    html+=`<div class="sys-section"><div class="sys-sec-title">${sec}</div><div class="sys-grid">`;
+    syss.forEach(s=>{
+      const chips=s.tgts.map(t=>`<span class="tc ${tm[t]}">${tl[t]}</span>`).join('');
+      const ops=s.ops.map(o=>`<div class="op-tag"><span class="op-f">${o.f}</span><span class="op-n">${o.n}</span>${o.s==='critical'?`<span class="op-s op-sc">CRIT</span>`:o.s==='strained'?`<span class="op-s op-ss">STRAIN</span>`:''}</div>`).join('');
+
+      const imgHtml = getSysIllustration(s.nm);
+      const opFlags = s.ops.map(o=>o.f).join(',');
+      html+=`<div class="sc" data-ops="${opFlags}">
+        ${imgHtml}
+        <div class="sc-top">
+          <div><div class="sc-name">${s.nm}</div><div class="sc-aka">${s.aka}</div><div class="tcs">${chips}</div></div>
+          <div class="sc-stat-col"><div class="sc-status scs-${s.status==='critical'?'crit':s.status==='strained'?'str':'ok'}">${slbl[s.status]}</div><div class="sc-cost">${s.cost}</div></div>
+        </div>
+        <div class="sc-body">
+          <div class="sc-stats">
+            <div class="sc-stat"><div class="sc-stat-v" style="font-size:9px">${s.range.split('·')[0].trim()}</div><div class="sc-stat-l">Range</div></div>
+            <div class="sc-stat"><div class="sc-stat-v">${s.spd}</div><div class="sc-stat-l">Speed</div></div>
+            <div class="sc-stat"><div class="sc-stat-v">${s.ops.length}</div><div class="sc-stat-l">Operators</div></div>
+          </div>
+          <div class="sc-desc">${s.desc}</div>
+          <div class="ops-row">${ops}</div>
+          ${s.note?`<div class="sc-note-toggle" onclick="this.nextElementSibling.classList.toggle('open');this.textContent=this.nextElementSibling.classList.contains('open')?'▲ hide':'▼ note'">▼ note</div><div class="sc-note">${s.note}</div>`:''}
+        </div>
+      </div>`;
+    });
+    html+=`</div></div>`;
+  });
+  el.innerHTML=html;
+}
+
+// ══════════════════════════════════════════════════════
+// UI CONTROLS
+// ══════════════════════════════════════════════════════
+let isDark=false;
+function toggleDark(){
+  isDark=!isDark;
+  document.body.classList.toggle('dark',isDark);
+  document.querySelector('.hbtn').textContent=isDark?'☀':'☾';
+}
+
+function showView(v){
+  document.querySelectorAll('.view').forEach(el=>el.classList.remove('active'));
+  document.getElementById('view-'+v).classList.add('active');
+  ['ov','sys'].forEach(t=>{
+    const b=document.getElementById('tab-'+t);
+    if(b) b.classList.toggle('active',t===v);
+  });
+  if(v==='sys') buildSysGuide();
+  if(v==='ov'||v==='sys') window.scrollTo(0,0);
+}
+
+function toggleAcc(hdr){
+  const body=hdr.nextElementSibling;
+  const arrow=hdr.querySelector('.acc-arrow');
+  const open=body.classList.toggle('open');
+  if(arrow) arrow.classList.toggle('open',open);
+}
+
+function tick(){document.getElementById('hclock').textContent=new Date().toUTCString().split(' ')[4]+' UTC';}
+tick();setInterval(tick,1000);
+
+buildOverview();
+</script>
+</body>
+</html>
