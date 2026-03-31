@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Gulf Interceptor Capacity · AKE International · Day 20 · 19 Mar 2026</title>
+<title>Gulf Interceptor Capacity · AKE International · Day 31 · 31 Mar 2026</title>
 <style>
 :root{--bg:#f0f4f8;--panel:#fff;--border:#dde3ea;--text:#1a2535;--muted:#6b7a8d;--muted2:#4a5568;--ake1:#083863;--ake2:#00549f;--red:#c0392b;--amber:#b7600a;--green:#1a6b3a;--mono:'JetBrains Mono',monospace;}
 *{box-sizing:border-box;margin:0;padding:0;}
@@ -145,9 +145,9 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 <div class="hdr">
   <div>
     <div class="hdr-title">Gulf Interceptor Capacity · AKE International</div>
-    <div class="hdr-sub">Analyst estimates · open-source derived · not official intelligence</div>
+    <div class="hdr-sub">Produced by <a href="https://www.akegroup.com" style="color:rgba(255,255,255,.7);text-decoration:underline" target="_blank">AKE International</a> (www.akegroup.com)</div>
   </div>
-  <div class="hdr-day">Day 20 · 19 Mar 2026</div>
+  <div class="hdr-day">Day 31 · 31 Mar 2026</div>
 </div>
 
 <div class="nav-tabs">
@@ -155,6 +155,10 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
   <button class="ntab" id="tab-systems" onclick="showTab('systems')">Systems guide</button>
 </div>
 
+<div style="background:#fff3cd;border-bottom:1px solid #ffc107;padding:8px 24px;font-size:10px;color:#856404;display:flex;align-items:center;gap:10px;">
+  <span style="font-size:14px">⚠</span>
+  <span><strong>Estimates only.</strong> All figures are open-source analyst estimates produced by AKE International. They do not represent confirmed stockpile data, official intelligence, or the views of any government. Figures should not be cited as fact. For enquiries contact <a href="https://www.akegroup.com" style="color:#856404" target="_blank">www.akegroup.com</a>.</span>
+</div>
 <div id="view-countries" class="view active">
   <div id="view-list" style="padding:24px"><div class="cards" id="card-container"></div></div>
   <div id="view-detail" style="display:none;padding:24px">
@@ -196,10 +200,18 @@ function calcUAE(p) {
   const spb = p.shots_per_bm, ubms = Math.round(bm * (1 - p.us_share));
   const tf = Math.min(p.thaad_ok, Math.round(ubms * 0.3)), tr = Math.max(0, p.thaad_ok - tf);
   const p3r = Math.max(0, p.pac3_stock - Math.round((ubms - tf) * spb) - Math.round(cm * 1.3));
-  const bm_cap = Math.floor(tr + p3r / spb + 80 / 2.5);
-  const di = Math.round(dro * 0.94), fh = Math.round(di * 0.65), gu = Math.min(365, Math.round((di - fh) * 1.1)), gr = Math.max(0, 365 - gu);
+  const pac2 = p.pac2_rem || 80;
+  const bm_cap = Math.floor(tr + p3r / spb + pac2 / 2.5);
+  const di = Math.round(dro * 0.94), fh = Math.round(di * 0.65);
+  // Ground drone layer: scenario-specific stocks (Cheongung exhausted in all cases, Barak-8 exhausted)
+  const cheong_pre = p.cheong_pre || 94, barak_pre = p.barak_pre || 120, pantsir_pre = p.pantsir_pre || 175;
+  const c_rem = Math.max(0, cheong_pre  - Math.min(cheong_pre,  Math.round(di * 0.20)));
+  const b_rem = Math.max(0, barak_pre   - Math.min(barak_pre,   Math.round(di * 0.08)));
+  const p_rem = Math.max(0, pantsir_pre - Math.min(pantsir_pre, Math.round(di * 0.07 * 1.1)));
+  const gr = c_rem + b_rem + p_rem;
   const fr = Math.max(0, p.fighter_pre - Math.round(fh * p.aams_per_drone)), dfc = Math.floor(fr / p.aams_per_drone);
-  return { bm_cap, thaad_rem: tr, pac3_rem: p3r, gnd_rem: gr, ftr_rem: fr, dr_cap: dfc + Math.floor(gr / 1.1), dr_cap_ftr: dfc, spb, us_share: p.us_share, aams: p.aams_per_drone, drones_int: di, dro };
+  return { bm_cap, thaad_rem: tr, pac3_rem: p3r, pac2_rem: pac2, gnd_rem: gr, c_rem, b_rem, p_rem, ftr_rem: fr,
+           dr_cap: Math.round(gr / 1.05) + dfc, dr_cap_ftr: dfc, spb, us_share: p.us_share, aams: p.aams_per_drone, drones_int: di, dro };
 }
 
 function calcSaudi(p) {
@@ -229,9 +241,12 @@ function calcQatar(p) {
 
 // ── SCENARIOS ─────────────────────────────────────────────────────────────────
 const UAE_SC = {
-  worst: { pac3_stock: 350, shots_per_bm: 3.0, us_share: 0.10, thaad_ok: 8,  fighter_pre: 1200, aams_per_drone: 1.2 },
-  mid:   { pac3_stock: 450, shots_per_bm: 2.0, us_share: 0.25, thaad_ok: 20, fighter_pre: 1400, aams_per_drone: 1.0 },
-  best:  { pac3_stock: 420, shots_per_bm: 1.8, us_share: 0.45, thaad_ok: 50, fighter_pre: 1400, aams_per_drone: 0.95 },
+  // pac2_rem: PAC-2 varies by scenario — more draws in worst case
+  // cheong_pre: 64 deployed (2 batteries × 32 rds) + 30 emergency resupply Day 10 = 94 mid/best; 64 worst (no resupply)
+  // barak_pre/pantsir_pre: best estimates, no DSCA trail
+  worst: { pac3_stock: 350, shots_per_bm: 3.0, us_share: 0.10, thaad_ok: 8,  pac2_rem: 45,  cheong_pre: 64,  barak_pre: 100, pantsir_pre: 130, fighter_pre: 1200, aams_per_drone: 1.2 },
+  mid:   { pac3_stock: 450, shots_per_bm: 2.0, us_share: 0.25, thaad_ok: 20, pac2_rem: 70,  cheong_pre: 94,  barak_pre: 120, pantsir_pre: 150, fighter_pre: 1400, aams_per_drone: 1.0 },
+  best:  { pac3_stock: 420, shots_per_bm: 1.8, us_share: 0.45, thaad_ok: 50, pac2_rem: 90,  cheong_pre: 94,  barak_pre: 120, pantsir_pre: 175, fighter_pre: 1400, aams_per_drone: 0.95 },
 };
 const KSA_SC = {
   worst: { pac3_stock: 400, shots_per_bm: 2.5, us_share: 0.10, thaad_ok: 20, fighter_pre: 2000, sh_frac: 0.00, crotale_stock: 150 },
@@ -239,20 +254,23 @@ const KSA_SC = {
   best:  { pac3_stock: 650, shots_per_bm: 1.6, us_share: 0.50, thaad_ok: 48, fighter_pre: 3500, sh_frac: 0.25, crotale_stock: 320 },
 };
 const QAT_SC = {
-  worst: { pac3_stock: 400, shots_per_bm: 2.5, us_share: 0.10, thaad_ok: 0,  aster_pre: 25, ram_pre: 35 },
-  mid:   { pac3_stock: 550, shots_per_bm: 2.0, us_share: 0.25, thaad_ok: 16, aster_pre: 42, ram_pre: 70 },
-  best:  { pac3_stock: 680, shots_per_bm: 1.8, us_share: 0.40, thaad_ok: 32, aster_pre: 62, ram_pre: 95 },
+  // Inbound updated to Day 31: ~230 BMs, ~160 drones — more draw on all systems
+  worst: { pac3_stock: 400, shots_per_bm: 2.5, us_share: 0.10, thaad_ok: 0,  aster_pre: 20, ram_pre: 30 },
+  mid:   { pac3_stock: 550, shots_per_bm: 2.0, us_share: 0.25, thaad_ok: 16, aster_pre: 38, ram_pre: 62 },
+  best:  { pac3_stock: 680, shots_per_bm: 1.8, us_share: 0.40, thaad_ok: 32, aster_pre: 58, ram_pre: 88 },
 };
 
 // ── SLIDERS ── all lo=bad/red, hi=good/green, right=better ───────────────────
 // For "worse when higher" params (shots_per_bm, aams_per_drone) we store the
 // INVERSE as the slider value so right=better still holds.
 const UAE_SL = [
-  { key: 'pac3_stock',  label: 'PAC-3 stock pre-war',                  lo: 350,  hi: 500,  mid: 450,  step: 10,   toP: v => v,   fmt: v => Math.round(v) + ' rds',        hint: 'Only 452 ever DSCA-approved for UAE.' },
-  { key: 'pac3_eff',    label: 'PAC-3 rounds needed per BM kill',       lo: 0.33, hi: 0.56, mid: 0.50, step: 0.01, toP: v => 1/v, fmt: v => (1/v).toFixed(1) + ' rds/BM',  hint: 'Slider right = more efficient. Standard = 2 rds/BM (0.50).' },
+  { key: 'pac3_stock',  label: 'PAC-3 stock pre-war',                   lo: 350,  hi: 500,  mid: 450,  step: 10,   toP: v => v,   fmt: v => Math.round(v) + ' rds',        hint: 'Only 452 ever DSCA-approved for UAE. Emergency $4.5bn THAAD + resupply approved Mar 20 — not yet delivered.' },
+  { key: 'pac3_eff',    label: 'PAC-3 rounds needed per BM kill',       lo: 0.33, hi: 0.56, mid: 0.50, step: 0.01, toP: v => 1/v, fmt: v => (1/v).toFixed(1) + ' rds/BM',  hint: 'Slider right = more efficient. Standard = 2 rds/BM (0.50). Gulf states now rationing — selecting which threats to engage.' },
   { key: 'us_share',    label: 'Share of BM intercepts by US systems',  lo: 0.10, hi: 0.45, mid: 0.25, step: 0.05, toP: v => v,   fmt: v => Math.round(v * 100) + '%',       hint: 'Higher = less draw on UAE sovereign stocks.' },
   { key: 'thaad_ok',    label: 'THAAD rounds fired before radar lost',  lo: 8,    hi: 50,   mid: 20,   step: 1,    toP: v => v,   fmt: v => Math.round(v) + ' rds',         hint: 'Both UAE THAAD sites damaged. 96 rounds pre-crisis.' },
-  { key: 'fighter_pre', label: 'Air-to-air missiles held pre-war',      lo: 1200, hi: 1400, mid: 1400, step: 50,   toP: v => v,   fmt: v => Math.round(v) + ' rds',         hint: 'AIM-120 + AIM-9 (F-16s), MICA (Mirages).' },
+  { key: 'pac2_rem',    label: 'PAC-2 GEM-T rounds remaining',          lo: 40,   hi: 110,  mid: 80,   step: 5,    toP: v => v,   fmt: v => Math.round(v) + ' rds',         hint: '~120 pre-war. US officials confirmed PAC-2 in active use. Higher remaining = PAC-3 was more efficient or US took more load.' },
+  { key: 'pantsir_pre', label: 'Pantsir-S1 rounds remaining',           lo: 50,   hi: 200,  mid: 175,  step: 10,   toP: v => v,   fmt: v => Math.round(v) + ' rds',         hint: '~200 pre-war. Cheongung (94 rds) and Barak-8 (120 rds) are both estimated exhausted by Day 20. Pantsir is the surviving ground drone layer.' },
+  { key: 'fighter_pre', label: 'Air-to-air missiles held pre-war',      lo: 1200, hi: 1400, mid: 1400, step: 50,   toP: v => v,   fmt: v => Math.round(v) + ' rds',         hint: '400 AMRAAMs emergency sale approved Mar 20 — not yet delivered. AIM-120 + AIM-9 (F-16s), MICA (Mirages).' },
   { key: 'drone_eff',   label: 'Air-to-air missiles per drone kill',    lo: 0.71, hi: 1.25, mid: 1.0,  step: 0.05, toP: v => 1/v, fmt: v => (1/v).toFixed(2) + ' per kill', hint: 'Right = fewer missiles per kill. Cannon kills use zero.' },
 ];
 const KSA_SL = [
@@ -269,8 +287,8 @@ const QAT_SL = [
   { key: 'pac3_eff',    label: 'PAC-3 rounds needed per BM kill',       lo: 0.40, hi: 0.56, mid: 0.50, step: 0.01, toP: v => 1/v, fmt: v => (1/v).toFixed(1) + ' rds/BM',  hint: 'Qatar has some combat experience from June 2025. Right = more efficient.' },
   { key: 'us_share',    label: 'Share of BM intercepts by US systems',  lo: 0.10, hi: 0.40, mid: 0.25, step: 0.05, toP: v => v,   fmt: v => Math.round(v * 100) + '%',       hint: 'Al Udeid hosts substantial US forces with own Patriot batteries.' },
   { key: 'thaad_ok',    label: 'THAAD rounds available',                lo: 0,    hi: 32,   mid: 16,   step: 1,    toP: v => v,   fmt: v => Math.round(v) + ' rds',         hint: 'Confirmed present Mar 14. Stock and pre-war draw-down uncertain.' },
-  { key: 'aster_pre',   label: 'Aster 30 naval rounds remaining',       lo: 25,   hi: 62,   mid: 42,   step: 1,    toP: v => v,   fmt: v => Math.round(v) + ' rds',         hint: '72 pre-war. Draw-down from June 2025 and Days 1–20.' },
-  { key: 'ram_pre',     label: 'RAM / Marlin naval rounds remaining',   lo: 35,   hi: 95,   mid: 70,   step: 5,    toP: v => v,   fmt: v => Math.round(v) + ' rds',         hint: '~105 pre-war. Close-in layer on Qatari naval vessels.' },
+  { key: 'aster_pre',   label: 'Aster 30 naval rounds remaining',       lo: 15,   hi: 60,   mid: 38,   step: 1,    toP: v => v,   fmt: v => Math.round(v) + ' rds',         hint: '72 pre-war. Draw-down from June 2025 and 31 days of conflict.' },
+  { key: 'ram_pre',     label: 'RAM / Marlin naval rounds remaining',   lo: 25,   hi: 90,   mid: 62,   step: 5,    toP: v => v,   fmt: v => Math.round(v) + ' rds',         hint: '~105 pre-war. Close-in layer on Qatari naval vessels. More depleted than Day 20.' },
 ];
 
 // Current slider values — initialised to mid
@@ -283,8 +301,9 @@ QAT_SL.forEach(s => QAT_CV[s.key] = s.mid);
 function uaeP() {
   const p = {};
   UAE_SL.forEach(s => p[s.key] = s.toP(UAE_CV[s.key]));
-  // Rename to calc-expected keys
-  return { pac3_stock: p.pac3_stock, shots_per_bm: p.pac3_eff, us_share: p.us_share, thaad_ok: p.thaad_ok, fighter_pre: p.fighter_pre, aams_per_drone: p.drone_eff };
+  return { pac3_stock: p.pac3_stock, shots_per_bm: p.pac3_eff, us_share: p.us_share, thaad_ok: p.thaad_ok,
+           pac2_rem: p.pac2_rem, pantsir_pre: p.pantsir_pre, cheong_pre: UAE_CV.cheong_pre || 94, barak_pre: UAE_CV.barak_pre || 120,
+           fighter_pre: p.fighter_pre, aams_per_drone: p.drone_eff };
 }
 function ksaP() {
   const p = {};
@@ -309,27 +328,27 @@ const DATA = {
     name: 'UAE', flag: '🇦🇪', status: 'critical', bm_status: 'critical', drone_status: 'strained',
     sub: 'Al Dhafra · Al Minhad · Highest confirmed inbound · F-16E + Mirage primary drone layer',
     inbound: {
-      bm:    { confirmed: 334,  est: null, source: 'UAE MoD Mar 19', conf: 'high', rows: [['Detected (Day 20)', '334'], ['Intercepted', '~316'], ['Type', 'Al Qiam SRBM + Shahab']] },
-      cm:    { confirmed: 15,   est: null, source: 'UAE MoD', conf: 'high', rows: [['Detected', '15'], ['All intercepted', '15']] },
-      drone: { confirmed: 1714, est: null, source: 'UAE MoD Mar 19', conf: 'high', rows: [['Detected (Day 20)', '1,714'], ['Intercepted', '~1,613 (94%)']] },
+      bm:    { confirmed: 433,  est: null, source: 'UAE MoD Mar 31', conf: 'high', rows: [['Detected (Day 31)', '433'], ['Intercepted', '~414'], ['Type', 'Al Qiam SRBM + Shahab'], ['Mar 29', '16 BMs — heaviest day in weeks'], ['Mar 31', '8 BMs + 4 CMs intercepted'], ['Iran BM launchers disabled', '~70% by Day 16 (IDF)']] },
+      cm:    { confirmed: 19,   est: null, source: 'UAE MoD Mar 31', conf: 'high', rows: [['Detected (Day 31)', '19'], ['All intercepted', '19']] },
+      drone: { confirmed: 1977, est: null, source: 'UAE MoD Mar 31', conf: 'high', rows: [['Detected (Day 31)', '1,977'], ['Intercepted', '~1,858 (~94%)'], ['Mar 29', '42 drones — heaviest day in weeks'], ['Mar 31', '36 drones intercepted']] },
     },
     systems: [
       { nm: 'THAAD',                  rl: 'Tier 1 · BMs only',                   pre: 96,   lo: 3,   hi: 12,  pct: 8,   conf: 'low' },
       { nm: 'PAC-3 MSE',              rl: 'Tier 2 · BM + CM',                    pre: 700,  lo: 20,  hi: 90,  pct: 7,   conf: 'low' },
       { nm: 'PAC-2 GEM-T',            rl: 'Tier 2 · backup BM',                  pre: 120,  lo: 50,  hi: 110, pct: 67,  conf: 'very low' },
-      { nm: 'Cheongung II',           rl: 'Tier 2 · drone + CM',                 pre: 250,  lo: 140, hi: 220, pct: 76,  conf: 'low' },
-      { nm: 'Barak-8',                rl: 'Tier 2 · drone + CM',                 pre: 120,  lo: 40,  hi: 90,  pct: 54,  conf: 'low' },
+      { nm: 'Cheongung II',           rl: 'Tier 2 · drone + CM',                 pre: 94,   lo: 0,   hi: 0,   pct: 0,   conf: 'low' },
+      { nm: 'Barak-8',                rl: 'Tier 2 · drone + CM',                 pre: 120,  lo: 0,   hi: 0,   pct: 0,   conf: 'low' },
       { nm: 'Pantsir-S1',             rl: 'Tier 3 · close-in drones',            pre: 200,  lo: 70,  hi: 140, pct: 55,  conf: 'very low' },
       { nm: 'F-16E / Mirage 2000-9',  rl: 'Airborne · primary drone layer',      pre: 2500, lo: 900, hi: 1800,pct: 54,  conf: 'very low' },
     ],
   },
   qatar: {
     name: 'Qatar', flag: '🇶🇦', status: 'critical', bm_status: 'critical', drone_status: 'critical',
-    sub: 'Al Udeid · PAC-3 · THAAD confirmed · Naval Aster 30 · NASAMS exhausted · Jets are primary drone layer',
+    sub: 'Al Udeid · PAC-3 · THAAD confirmed · Naval Aster 30 · NASAMS exhausted · Jets primary drone layer · Ukraine 10-yr defense deal signed Mar 28',
     inbound: {
-      bm:    { confirmed: null, est: 170, source: '65 Day 1 (AA); 60+ subsequent (Naval News); events to Mar 19', conf: 'med', rows: [['Day 1 wave', '65 intercepted, 2 hit Al Udeid'], ['Subsequent (est.)', '~105 more'], ['Day 20 total est.', '~170']] },
-      cm:    { confirmed: null, est: 15,  source: 'Event tally', conf: 'low', rows: [['CMs estimated', '~15']] },
-      drone: { confirmed: null, est: 130, source: 'Event tally; stopped publishing after Day 4', conf: 'low', rows: [['Day 4 cumulative', '39 detected, 24 intercepted'], ['Day 20 total est.', '~130']] },
+      bm:    { confirmed: null, est: 230, source: 'Day 1 (AA); subsequent events; Wikipedia tally to Mar 18; event tally Mar 18-31', conf: 'med', rows: [['Day 1 wave', '65 intercepted, 2 hit Al Udeid'], ['Through Mar 18 (Wikipedia)', '~203 BMs + CMs total'], ['Mar 31 est.', '~230'], ['Mar 17', '17 BMs + 6 drones in one day']] },
+      cm:    { confirmed: null, est: 20,  source: 'Event tally through Mar 31', conf: 'low', rows: [['CMs estimated', '~20']] },
+      drone: { confirmed: null, est: 160, source: 'Event tally through Mar 31; Qatar stopped cumulative publishing early', conf: 'low', rows: [['Day 4 cumulative', '39 detected, 24 intercepted'], ['Mar 18', 'Ras Laffan gas facility struck'], ['Day 31 total est.', '~160']] },
     },
     systems: [
       { nm: 'THAAD',                        rl: 'Tier 1 · confirmed present Mar 14',                   pre: 48,  lo: 0,   hi: 32,  pct: 33,  conf: 'low' },
@@ -343,11 +362,11 @@ const DATA = {
   },
   saudi: {
     name: 'Saudi Arabia', flag: '🇸🇦', status: 'strained', bm_status: 'adequate', drone_status: 'adequate',
-    sub: '25 Patriot batteries · Prince Sultan primary BM target · Silent Hunter laser (desert limitations) · Largest Gulf fighter fleet',
+    sub: '25 Patriot batteries · Prince Sultan heavily targeted (E-3 destroyed Mar 28) · Greek Patriot batteries confirmed · Ukrainian anti-drone experts deployed · Silent Hunter laser (desert limitations) · Largest Gulf fighter fleet',
     inbound: {
-      bm:    { confirmed: null, est: 40,  source: 'Arab News tally + MoD Mar 19', conf: 'med', rows: [['BM+CM est.', '~40+'], ['Mar 19', '4 BMs targeting Riyadh']] },
-      cm:    { confirmed: null, est: 5,   source: 'Arab News tally', conf: 'low', rows: [['CMs', 'Included in 40+, not disaggregated']] },
-      drone: { confirmed: null, est: 438, source: 'Arab News tally Mar 17', conf: 'med', rows: [['Total (media tally)', '~438'], ['Mar 19', 'Samref refinery Yanbu struck']] },
+      bm:    { confirmed: null, est: 90,  source: 'Arab News / SPA tally through Mar 31', conf: 'med', rows: [['BM+CM est. (Day 31)', '~90+'], ['Mar 28 Prince Sultan', 'E-3 Sentry destroyed, 15 US wounded (6 BMs + 29 drones)'], ['Greek Patriot', 'Greece operating batteries in KSA — confirmed Mar 20']] },
+      cm:    { confirmed: null, est: 8,   source: 'Arab News tally through Mar 31', conf: 'low', rows: [['CMs', 'Included in BM total — not separately published']] },
+      drone: { confirmed: null, est: 600, source: 'SPA/Arab News tally through Mar 31', conf: 'med', rows: [['Day 31 est.', '~600'], ['Mar 13', 'Record 56 drones in one day'], ['Mar 28', '29 drones at Prince Sultan (destroyed E-3 Sentry)'], ['Ukraine experts', '201+ anti-drone specialists deployed (from Mar 20)']] },
     },
     systems: [
       { nm: 'PAC-3 MSE',          rl: 'Tier 2 · 25 batteries',                        pre: 600, lo: 480, hi: 620, pct: 93,  conf: 'low' },
@@ -462,7 +481,8 @@ function updateHero(id) {
     set('h-dr', '~' + r.dr_cap);
     set('h-dr-r', 'range ' + Math.round(r.dr_cap * .75) + '–' + Math.round(r.dr_cap * 1.3));
     set('h-ftr', '~' + r.ftr_rem + ' air-to-air missiles → ~' + r.dr_cap_ftr + ' kills');
-    set('h-gnd', r.gnd_rem === 0 ? 'EXHAUSTED' : '~' + r.gnd_rem + ' rds → ~' + Math.floor(r.gnd_rem / 1.1) + ' kills');
+    set('h-pac2', '~' + r.pac2_rem + ' rds → ~' + Math.floor(r.pac2_rem/2.5) + ' BMs');
+    set('h-gnd', r.p_rem === 0 ? 'EXHAUSTED' : '~' + r.p_rem + ' rds → ~' + Math.floor(r.p_rem / 1.1) + ' kills');
   } else if (id === 'saudi') {
     const r = calcSaudi(ksaP());
     set('h-bm', '~' + r.bm_cap);
@@ -499,7 +519,7 @@ function buildUAEHero(r) {
     <div class="hero-breakdown">
       <div class="hero-layer"><span class="hero-layer-nm">THAAD (upper)</span><span class="hero-layer-v ${r.thaad_rem < 5 ? 'exhaust' : ''}" id="h-thaad">~${r.thaad_rem} rds</span></div>
       <div class="hero-layer"><span class="hero-layer-nm">PAC-3 MSE (terminal)</span><span class="hero-layer-v ${r.pac3_rem === 0 ? 'exhaust' : ''}" id="h-pac3">${r.pac3_rem === 0 ? 'EXHAUSTED' : '~' + r.pac3_rem + ' rds → ~' + Math.floor(r.pac3_rem / r.spb) + ' BMs'}</span></div>
-      <div class="hero-layer"><span class="hero-layer-nm">PAC-2 GEM-T (backup)</span><span class="hero-layer-v">~80 rds → ~32 BMs</span></div>
+      <div class="hero-layer"><span class="hero-layer-nm">PAC-2 GEM-T (backup)</span><span class="hero-layer-v" id="h-pac2">~${r.pac2_rem} rds → ~${Math.floor(r.pac2_rem/2.5)} BMs</span></div>
     </div>
     <div class="hero-note" id="h-bm-note">@ ${r.spb.toFixed(1)} rds/BM · US covers ${Math.round(r.us_share * 100)}% of intercepts</div>
   </div>
@@ -508,10 +528,13 @@ function buildUAEHero(r) {
     <div class="hero-num dr" id="h-dr">~${r.dr_cap}</div><div class="hero-range" id="h-dr-r">range ${dL}–${dH}</div>
     <div class="hero-breakdown">
       <div class="hero-layer"><span class="hero-layer-nm">F-16E / Mirage 2000-9</span><span class="hero-layer-v fighter" id="h-ftr">~${r.ftr_rem} air-to-air missiles → ~${r.dr_cap_ftr} kills</span></div>
-      <div class="hero-layer"><span class="hero-layer-nm">Cheongung / Barak / Pantsir</span><span class="hero-layer-v ${r.gnd_rem === 0 ? 'exhaust' : ''}" id="h-gnd">${r.gnd_rem === 0 ? 'EXHAUSTED' : '~' + r.gnd_rem + ' rds → ~' + Math.floor(r.gnd_rem / 1.1) + ' kills'}</span></div>
+      <div class="hero-layer"><span class="hero-layer-nm">Cheongung II</span><span class="hero-layer-v exhaust">EXHAUSTED (94 rds pre-war+resupply)</span></div>
+      <div class="hero-layer"><span class="hero-layer-nm">Barak-8</span><span class="hero-layer-v exhaust">EXHAUSTED (120 rds pre-war)</span></div>
+      <div class="hero-layer"><span class="hero-layer-nm">Pantsir-S1 (remaining)</span><span class="hero-layer-v ${r.p_rem === 0 ? 'exhaust' : ''}" id="h-gnd">${r.p_rem === 0 ? 'EXHAUSTED' : '~' + r.p_rem + ' rds → ~' + Math.floor(r.p_rem / 1.1) + ' kills'}</span></div>
       <div class="hero-consumed"><span>Already intercepted (Day 20)</span><span>${r.drones_int.toLocaleString()} of ${r.dro.toLocaleString()} fired</span></div>
     </div>
     <div class="jet-note">✈ ~130 aircraft remain flyable regardless of missile stock. Even at zero missiles, aircraft can engage drones with cannon fire at close range.</div>
+    <div style="margin-top:8px;padding:6px 8px;background:rgba(0,84,159,.07);border-radius:5px;font-size:9px;color:var(--ake2);line-height:1.4">⏳ Pending resupply (approved, not yet delivered): $4.5bn THAAD system · 400 AMRAAMs · F-16 munitions (US emergency waiver Mar 20) · 10× FS-LIDS counter-drone systems ($2.1bn). Ukraine defense deal signed Mar 28 — anti-drone expertise + Sting interceptors. 25-month cycle applies to THAAD.</div>
   </div></div>`;
 }
 
@@ -717,5 +740,9 @@ function buildSysGuide() {
 // ── INIT ──────────────────────────────────────────────────────────────────────
 renderCards();
 </script>
+<div style="background:var(--ake1);color:rgba(255,255,255,.5);padding:12px 24px;font-size:9px;display:flex;justify-content:space-between;align-items:center;margin-top:24px;">
+  <span>© AKE International 2026 · <a href="https://www.akegroup.com" style="color:rgba(255,255,255,.6)" target="_blank">www.akegroup.com</a></span>
+  <span>All figures are analyst estimates · open-source derived · not official intelligence · not for onward distribution without attribution</span>
+</div>
 </body>
 </html>
